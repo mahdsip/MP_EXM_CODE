@@ -21,7 +21,7 @@
 #define FINGERS               3
 // Identifies mitten fingers
 #define MITTEN                0
-// Identifies forefinger finger
+// Identifies forefinger finger 
 #define FOREFINGER            1
 // Identifies thumb finger
 #define THUMB                 2

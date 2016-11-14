@@ -15,8 +15,6 @@
 #define PIN_INPUT_MYOWARE_SENSOR_1     1
 // INPUT pin for MyoWare Sensor 2
 #define PIN_INPUT_MYOWARE_SENSOR_2     2
-// INPUT pin for acceloremeter-giroscope
-#define PIN_INPUT_POSITION             3
 
 // OUTPUT pin for LED stripe
 #define PIN_OUTPUT_LED_STRIPE          6
@@ -33,10 +31,6 @@ class InputOutputUtils{
 
   private:
 
-	// INPUT - Accelerometer Data
-    int accelerometerData;
-	// INPUT - Giroscope Data
-    int giroscopeData;
 	// INPUT - Mioware Sensor Data 1 
     int miowareSensorData1;
 	// INPUT - Mioware Sensor Data 2 

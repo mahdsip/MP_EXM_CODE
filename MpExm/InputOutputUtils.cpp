@@ -63,13 +63,9 @@ int InputOutputUtils::getTransitionToPerform(){
 
     logger.debug("InputOutputUtils - getTransitionToPerform\n");
 
-    //accelerometerData   = analogRead(PIN_INPUT_POSITION);
-    //giroscopeData       = analogRead(PIN_INPUT_POSITION);
     //miowareSensorData1  = analogRead(PIN_INPUT_MYOWARE_SENSOR_1);
     //miowareSensorData2  = analogRead(PIN_INPUT_MYOWARE_SENSOR_2);
-
-    //int transition = random(0,TRANSITIONS_NUMBER-1);
-
+	
 	Serial.print("\nIntroduce un valor para el estado deseado: \n");
     Serial.print("  (0) STATE_INACTIVE\n");
     Serial.print("  (1) STATE_IDLE\n");

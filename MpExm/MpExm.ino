@@ -1,3 +1,5 @@
+#include <Servo.h>
+#include <Adafruit_NeoPixel.h>
 #include "Constants.h"
 #include "InputOutputUtils.h"
 #include "StateMachine.h"
