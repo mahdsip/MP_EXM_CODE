@@ -14,8 +14,6 @@
 #define OPEN                  0
 // Identifies close position
 #define CLOSE                 1
-// Identifies tongs position
-#define TONGS                 2
 
 // Number of finger elements
 #define FINGERS               3
@@ -30,9 +28,9 @@
 /* STATES                                                                */
 /*************************************************************************/
 // State Number
-#define STATES_NUMBER                 6
+#define STATES_NUMBER                  6
 // Inactive state (inactivo)
-#define STATE_INACTIVE                0
+#define STATE_INACTIVE                 0
 // Resting/Initial state. Open hand (reposo)
 #define STATE_IDLE                     1
 // Tongs state. Thumb + forefinger (pinza)
@@ -74,7 +72,7 @@ const int FINGER_POSITION_MATRIX[STATES_NUMBER][FINGERS] = {
  // MITTEN   FORE  THUMB
     { OPEN,  OPEN,  OPEN  }, // STATE_INACTIVE
     { OPEN,  OPEN,  OPEN  }, // STATE_IDLE
-    { OPEN,  TONGS, TONGS }, // STATE_TONGS
+    { OPEN,  CLOSE, CLOSE }, // STATE_TONGS
     { CLOSE, OPEN,  CLOSE }, // STATE_FINGER
     { CLOSE, CLOSE, OPEN  }, // STATE_CLOSE
     { CLOSE, CLOSE, CLOSE }  // STATE_FIST

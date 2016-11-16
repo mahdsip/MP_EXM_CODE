@@ -17,7 +17,7 @@
 #define PIN_INPUT_MYOWARE_SENSOR_2     2
 
 // OUTPUT pin for LED stripe
-#define PIN_OUTPUT_LED_STRIPE          6
+#define PIN_OUTPUT_LED_STRIPE          3
 
 // OUTPUT pin for mitten related servomotor
 #define PIN_OUTPUT_SERVO_MITTEN        4
@@ -38,9 +38,9 @@ class InputOutputUtils{
 
     // INPUT - Mitten fingers position readed from sensors (OPEN|CLOSE)
     int mittenPosition;
-	// INPUT - Forefinger finger position readed from sensors (OPEN|CLOSE|TONGS)
+	// INPUT - Forefinger finger position readed from sensors (OPEN|CLOSE)
     int forefingerPosition;
-	// INPUT - Thumb finger position readed from sensors (OPEN|CLOSE|TONGS)
+	// INPUT - Thumb finger position readed from sensors (OPEN|CLOSE)
     int thumbPosition;
   
     // OUTPUT - Servo Motors
@@ -75,11 +75,11 @@ class InputOutputUtils{
     int getMittenPosition();
 
     // Detects forefinger position from output elements feedback
-    // returns: OPEN|CLOSE|TONGS
+    // returns: OPEN|CLOSE
     int getForefingerPosition();
 
     // Detects thumb position from output elements feedback
-    // returns: OPEN|CLOSE|TONGS
+    // returns: OPEN|CLOSE
     int getThumbPosition();
 
 
@@ -105,17 +105,11 @@ class InputOutputUtils{
     // Moves forefinger to CLOSE postion if necesary
     void closeForefinger();
 
-    // Moves forefinger to TONGS postion if necesary
-    void tongsForefinger();
-
-    // Moves thumb to OPEN postion if necesary
+       // Moves thumb to OPEN postion if necesary
     void openThumb();
 
     // Moves mitten to CLOSE postion if necesary
     void closeThumb();
-
-    // Moves mitten to TONGS postion if necesary
-    void tongsThumb();
 
 };
 

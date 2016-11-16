@@ -10,8 +10,6 @@ void InputOutputUtils::initializeInputElements(){
 
   randomSeed(0);
 
-  accelerometerData   = 0;
-  giroscopeData       = 0;
   miowareSensorData1  = 0;
   miowareSensorData2  = 0;
 
@@ -23,8 +21,6 @@ void InputOutputUtils::resetInputElements(){
 
   randomSeed(0);
 
-  accelerometerData   = 0;
-  giroscopeData       = 0;
   miowareSensorData1  = 0;
   miowareSensorData2  = 0;
 
@@ -70,7 +66,7 @@ int InputOutputUtils::getTransitionToPerform(){
     Serial.print("  (0) STATE_INACTIVE\n");
     Serial.print("  (1) STATE_IDLE\n");
     Serial.print("  (2) STATE_TONGS\n");
-    Serial.print("  (3) STATE_CLOSE\n");
+    Serial.print("  (3) STATE_FINGER\n");
     Serial.print("  (4) STATE_CLOSE\n");
     Serial.print("  (5) STATE_FIST\n");
 
@@ -190,16 +186,6 @@ void InputOutputUtils::closeForefinger(){
 
 }
 
-void InputOutputUtils::tongsForefinger(){
-
-  logger.debug("InputOutputUtils - tongsForefinger\n");
-
-  // TODO: Don't move if current position is the same as selected
-  ledStripe.setPixelColor(3, ledStripe.Color(0, 0, 255));
-  ledStripe.show();
-  
-}
-
 void InputOutputUtils::openThumb(){
 
   logger.debug("InputOutputUtils - openThumb\n");
@@ -220,14 +206,5 @@ void InputOutputUtils::closeThumb(){
   
 }
 
-void InputOutputUtils::tongsThumb(){
-
-  logger.debug("InputOutputUtils - tongsThumb\n");
-
-  // TODO: Don't move if current position is the same as selected
-  ledStripe.setPixelColor(4, ledStripe.Color(0, 0, 255));
-  ledStripe.show();
-  
-}
 
 InputOutputUtils inputOutputUtils = InputOutputUtils();

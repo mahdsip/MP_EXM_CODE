@@ -45,8 +45,8 @@ void Transition::transitionToTongs(){
   logger.debug("Transition - transitionToTongs\n");
 
   openMitten();
-  tongsForefinger();
-  tongsThumb();
+  closeForefinger();
+  closeThumb();
 }
 
 void Transition::transitionToFinger(){
@@ -104,12 +104,6 @@ void Transition::transitionToFist(){
     inputOutputUtils.closeForefinger();
   }
 
-  void Transition::tongsForefinger(){
-
-    logger.debug("Transition - tongsForefinger\n");
-    inputOutputUtils.tongsForefinger();
-  }
-
   void Transition::openThumb(){
 
     logger.debug("Transition - openThumb\n");
@@ -120,10 +114,4 @@ void Transition::transitionToFist(){
 
     logger.debug("Transition - closeThumb\n");
     inputOutputUtils.closeThumb();
-  }
-
-  void Transition::tongsThumb(){
-
-    logger.debug("Transition - tongsThumb\n");
-    inputOutputUtils.tongsThumb();
   }

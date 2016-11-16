@@ -16,15 +16,11 @@ class Transition{
     void openForefinger();
 	// Moves forefinger to CLOSE postion if necesary
     void closeForefinger();
-	// Moves forefinger to TONGS postion if necesary
-    void tongsForefinger();
 
 	// Moves thumb to OPEN postion if necesary
     void openThumb();
 	// Moves thumb to CLOSE postion if necesary
     void closeThumb();
-	// Moves thumb to TONGS postion if necesary
-    void tongsThumb();
 	
   public:
 
