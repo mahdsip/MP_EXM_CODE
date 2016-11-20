@@ -11,20 +11,44 @@
 /*****************************************************************************/
 /* PIN DESCRIPTION                                                           */
 /*****************************************************************************/
+
+// INPUT pin for tactile switch
+#define PIN_INPUT_SWITH                              1
+
 // INPUT pin for MyoWare Sensor 1
-#define PIN_INPUT_MYOWARE_SENSOR_1     1
+#define PIN_INPUT_MYOWARE_SENSOR_1                   2
 // INPUT pin for MyoWare Sensor 2
-#define PIN_INPUT_MYOWARE_SENSOR_2     2
+#define PIN_INPUT_MYOWARE_SENSOR_2                   3
+
+// INPUT pin for mitten related potentiometer
+#define PIN_OUTPUT_POTENTIOMETER_MITTEN              4
+// INPUT pin for forefinger related potentiometer
+#define PIN_OUTPUT_POTENTIOMETER_FOREFINGER          5
+// INPUT pin for thumb related potentiometer
+#define PIN_OUTPUT_POTENTIOMETER_THUMB               6
+
+// INPUT pin for mitten related amperimeter
+#define PIN_OUTPUT_AMPERIMETER_MITTEN                7
+// INPUT pin for forefinger related amperimeter
+#define PIN_OUTPUT_AMPERIMETER_FOREFINGER            8
+// INPUT pin for thumb related amperimeter
+#define PIN_OUTPUT_AMPERIMETER_THUMB                 9
+
+// OUTPUT pin for mitten related motor
+#define PIN_OUTPUT_MOTOR_MITTEN                     10
+// OUTPUT pin for forefinger related motor
+#define PIN_OUTPUT_MOTOR_FOREFINGER                 11
+// OUTPUT pin for thumb related motor
+#define PIN_OUTPUT_MOTOR_THUMB                      12
 
 // OUTPUT pin for LED stripe
-#define PIN_OUTPUT_LED_STRIPE          3
+#define PIN_OUTPUT_LED_STRIPE                        3
 
-// OUTPUT pin for mitten related servomotor
-#define PIN_OUTPUT_SERVO_MITTEN        4
-// OUTPUT pin for forefinger related servomotor
-#define PIN_OUTPUT_SERVO_FOREFINGER    5
-// OUTPUT pin for thumb related servomotor
-#define PIN_OUTPUT_SERVO_THUMB         7
+// OUTPUT pin for LED RGB
+#define PIN_OUTPUT_LED_RGB                          14
+
+// OUTPUT pin for bluetoothpe
+#define PIN_OUTPUT_BLUETOOTH                        15
 
 
 class InputOutputUtils{
@@ -43,13 +67,15 @@ class InputOutputUtils{
 	// INPUT - Thumb finger position readed from sensors (OPEN|CLOSE)
     int thumbPosition;
   
-    // OUTPUT - Servo Motors
-    Servo servoMitten;
-    Servo servoForefinger;
-    Servo servoThumb;
+    // OUTPUT - Motors
+    Servo mototMitten;
+    Servo mototForefinger;
+    Servo motorThumb;
 
     // OUTPUT - LED Stripe
     Adafruit_NeoPixel ledStripe;
+
+	// TODO - Declarar el resto de los elementos
 
   public:
 

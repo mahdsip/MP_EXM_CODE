@@ -34,10 +34,6 @@ void State::reset(){
 
 
 int State::getMittenPosition(){
-
-  //TODO: What happens if finger position is diferent to current position?
-  //int mesuredPosition = inputOutputUtils.getMittenPosition();
-  //logger.debug("State - getMittenPosition  - measured: %i\n", mesuredPosition);
 	
   int fingerPosition   = FINGER_POSITION_MATRIX[currentState][MITTEN];
   logger.debug("State - getMittenPosition  - from state %i: %i\n", currentState, fingerPosition);
@@ -45,10 +41,6 @@ int State::getMittenPosition(){
 }
 
 int State::getForefingerPosition(){
-
-  //TODO: What happens if finger position is diferent to current position?
-  //int mesuredPosition  = inputOutputUtils.getForefingerPosition();
-  //logger.debug("State - getForefingerPosition  - measured: %i\n", mesuredPosition);
   
   int fingerPosition   = FINGER_POSITION_MATRIX[currentState][FOREFINGER];
   logger.debug("State - getForefingerPosition  - from state %i: %i\n", currentState, fingerPosition);
@@ -58,10 +50,6 @@ int State::getForefingerPosition(){
 int State::getThumbPosition(){
 
   logger.debug("State - getThumbPosition\n");
-
-  //TODO: What happens if finger position is diferent to current position?
-  //int mesuredPosition = inputOutputUtils.getThumbPosition();
-  //logger.debug("State - getThumbPosition  - measured: %i\n", mesuredPosition);
   
   int fingerPosition   = FINGER_POSITION_MATRIX[currentState][THUMB];
   logger.debug("State - getThumbPosition  - from state %i: %i\n", currentState, fingerPosition);
