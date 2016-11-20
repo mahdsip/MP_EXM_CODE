@@ -29,8 +29,6 @@ void InputOutputUtils::resetInputElements(){
 int InputOutputUtils::getMittenPosition(){
 
   //TODO: What happens if finger position is diferent to current position?
-  //int mesuredPosition = inputOutputUtils.getMittenPosition();
-  //logger.debug("InputOutputUtils - getMittenPosition  - measured: %i\n", mesuredPosition);
   int mittenPosition = random(0,1);
 
   logger.debug("InputOutputUtils - getMittenPosition - Mitten position: %i\n", mittenPosition);
@@ -42,8 +40,6 @@ int InputOutputUtils::getMittenPosition(){
 int InputOutputUtils::getForefingerPosition(){
 
   //TODO: What happens if finger position is diferent to current position?
-  //int mesuredPosition  = inputOutputUtils.getForefingerPosition();
-  //logger.debug("State - getForefingerPosition  - measured: %i\n", mesuredPosition);
   int forefingerPosition = random(0,2);
 
   logger.debug("InputOutputUtils - getForefingerPosition - Forefinger position: %i\n", forefingerPosition);
@@ -54,8 +50,6 @@ int InputOutputUtils::getForefingerPosition(){
 int InputOutputUtils::getThumbPosition(){
 
   //TODO: What happens if finger position is diferent to current position?
-  //int mesuredPosition = inputOutputUtils.getThumbPosition();
-  //logger.debug("State - getThumbPosition  - measured: %i\n", mesuredPosition);
   int thumbPosition = random(0,2);
 
   logger.debug("getThumbPosition - Thumb position: %i\n", thumbPosition);
