@@ -1,4 +1,6 @@
 #include "InputOutputUtils.h"
+#include "MsTimer2.h"
+
 
 /******************************************************************************/
 /* PUBLIC INPUT METHODS                                                       */
@@ -6,23 +8,29 @@
 
 void InputOutputUtils::initializeInputElements(){
 
-  logger.debug("InputOutputUtils - initializeInputElements\n");
+	logger.debug("InputOutputUtils - initializeInputElements\n");
 
-  randomSeed(0);
+	myowareSensorController1 = MyoControl(PIN_INPUT_MYOWARE_SENSOR_1);
+	//myowareSensorController2 = MyoControl(PIN_INPUT_MYOWARE_SENSOR_2);
 
-  miowareSensorData1  = 0;
-  miowareSensorData2  = 0;
+	myowareSensorController1.calibration();
+	//myowareSensorController2.calibration();
+}
 
+void InputOutputUtils::sampling(){
+
+	//logger.debug("InputOutputUtils - sampling\n");
+
+	myowareSensorController1.sampling();
+	//myowareSensorController2.sampling();
 }
 
 void InputOutputUtils::resetInputElements(){
 
-  logger.debug("InputOutputUtils - resetInputElements");
+  logger.debug("InputOutputUtils - resetInputElements\n");
 
-  randomSeed(0);
-
-  miowareSensorData1  = 0;
-  miowareSensorData2  = 0;
+  myowareSensorController1.calibration();
+  //myowareSensorController2.calibration();
 
 }
 
@@ -62,26 +70,24 @@ int InputOutputUtils::getTransitionToPerform(){
 
     logger.debug("InputOutputUtils - getTransitionToPerform\n");
 
-    //miowareSensorData1  = analogRead(PIN_INPUT_MYOWARE_SENSOR_1);
-    //miowareSensorData2  = analogRead(PIN_INPUT_MYOWARE_SENSOR_2);
-	
-	Serial.print("\nIntroduce un valor para el estado deseado: \n");
-    Serial.print("  (0) STATE_INACTIVE\n");
-    Serial.print("  (1) STATE_IDLE\n");
-    Serial.print("  (2) STATE_TONGS\n");
-    Serial.print("  (3) STATE_FINGER\n");
-    Serial.print("  (4) STATE_CLOSE\n");
-    Serial.print("  (5) STATE_FIST\n");
+	boolean activation1 = myowareSensorController1.activation();
+	//boolean activation1 = random(2);
+	logger.debug("InputOutputUtils - myowareSensorController1 - activation: %d\n", activation1);
+	//boolean activation2 = myowareSensorController1.activation();
+	//boolean activation2 = random(2);
+	//logger.debug("InputOutputUtils - myowareSensorController2 - activation: %d\n", activation2);
 
-    // send data only when you receive data:
-    while(!Serial.available());
 
-    // read the incoming byte:
-    int transition = Serial.parseInt();
+	int transition = false;
+	if (activation1)
+		//|| activation2)
+		transition = STATE_FIST;
+	else{
+		transition = STATE_IDLE;
+	}
 
-    logger.debug("InputOutputUtils - getTransitionToPerform - Transtion: %i\n", transition);
-
-    return transition;
+   //return test.testInputForTransition();
+   return transition;
 }
 
 /******************************************************************************/

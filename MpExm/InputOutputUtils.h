@@ -7,6 +7,8 @@
 #include <Adafruit_NeoPixel.h>
 
 #include "Constants.h"
+#include "Test.h"
+#include "MyoControl.h"
 
 /*****************************************************************************/
 /* PIN DESCRIPTION                                                           */
@@ -16,9 +18,9 @@
 #define PIN_INPUT_SWITH                              1
 
 // INPUT pin for MyoWare Sensor 1
-#define PIN_INPUT_MYOWARE_SENSOR_1                   2
+#define PIN_INPUT_MYOWARE_SENSOR_1                   A0
 // INPUT pin for MyoWare Sensor 2
-#define PIN_INPUT_MYOWARE_SENSOR_2                   3
+#define PIN_INPUT_MYOWARE_SENSOR_2                   A1
 
 // INPUT pin for mitten related potentiometer
 #define PIN_OUTPUT_POTENTIOMETER_MITTEN              4
@@ -45,7 +47,7 @@
 #define PIN_OUTPUT_LED_STRIPE                        3
 
 // OUTPUT pin for LED RGB
-#define PIN_OUTPUT_LED_RGB                          14
+#define PIN_OUTPUT_LED_RGB                          13
 
 // OUTPUT pin for bluetoothpe
 #define PIN_OUTPUT_BLUETOOTH                        15
@@ -55,10 +57,9 @@ class InputOutputUtils{
 
   private:
 
-	// INPUT - Mioware Sensor Data 1 
-    int miowareSensorData1;
-	// INPUT - Mioware Sensor Data 2 
-    int miowareSensorData2;
+	// INPUT - Myoware Sensor Controllers
+	MyoControl myowareSensorController1;
+	MyoControl myowareSensorController2;
 
     // INPUT - Mitten fingers position readed from sensors (OPEN|CLOSE)
     int mittenPosition;
@@ -77,11 +78,17 @@ class InputOutputUtils{
 
 	// TODO - Declarar el resto de los elementos
 
+	// TODELETE - Test Class
+	Test test;
+
   public:
 
     /*************************************************************************/
     /* INPUT METHODS                                                         */
     /*************************************************************************/
+
+	// TODO - Llevarlo a la librería cuando corrija el embuclamiento
+	void sampling();
 
     // Initialization of INPUT sensors
     void initializeInputElements();

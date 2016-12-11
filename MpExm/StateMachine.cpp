@@ -16,6 +16,9 @@ void StateMachine::executeTransition(){
 
     logger.debug("StateMachine - executeTransition\n");
 
+	// TODELETE: Empezamos en idle para poder testear
+	state.setCurrentState(STATE_IDLE);
+
     int currentState = state.getCurrentState();
 
     int transitionToPeform = transition.getTransitionToPerform();
