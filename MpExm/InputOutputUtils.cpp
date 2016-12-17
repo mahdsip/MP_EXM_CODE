@@ -14,15 +14,15 @@ void InputOutputUtils::initializeInputElements(){
 	myowareSensorController2 = MyoControl(PIN_INPUT_MYOWARE_SENSOR_2);
 }
 
-void InputOutputUtils::calibrate(){
+void InputOutputUtils::calibrateInputElements(){
 
-	logger.debug("InputOutputUtils - calibrate\n");
+	logger.debug("InputOutputUtils - calibrateInputElements (50segs aprox.)\n");
 
 	myowareSensorController1.calibration();
 	myowareSensorController2.calibration();
 }
 
-void InputOutputUtils::sampling(){
+void InputOutputUtils::samplingInputElements(){
 
 	//logger.debug("InputOutputUtils - sampling\n");
 
@@ -78,7 +78,7 @@ int InputOutputUtils::getTransitionToPerform(){
 	boolean activation1 = myowareSensorController1.activation();
 	//boolean activation1 = random(2);
 	logger.debug("InputOutputUtils - myowareSensorController1 - activation: %d\n", activation1);
-	boolean activation2 = myowareSensorController1.activation();
+	//boolean activation2 = myowareSensorController1.activation();
 	//boolean activation2 = random(2);
 	//logger.debug("InputOutputUtils - myowareSensorController2 - activation: %d\n", activation2);
 

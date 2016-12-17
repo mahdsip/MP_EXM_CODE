@@ -10,8 +10,8 @@
 StateMachine stateMachine;
 int counter = 0;
 
-void sampling(){
-	inputOutputUtils.sampling();
+void samplingInputElements(){
+	inputOutputUtils.samplingInputElements();
 }
 
 void setup(){
@@ -21,12 +21,12 @@ void setup(){
 
   inputOutputUtils.initializeInputElements();
 
-  MsTimer2::set(1, sampling);
+  MsTimer2::set(1, samplingInputElements);
   MsTimer2::start();
 
   delay(5000);
 
-  inputOutputUtils.calibrate();
+  inputOutputUtils.calibrateInputElements();
 
   inputOutputUtils.initializeOutputElements();
 
@@ -45,12 +45,18 @@ void loop(){
 
 void reset(){
 
-  MsTimer2::set(1, sampling);
-  MsTimer2::start();
+	logger.debug("\n-------------> reset\n", counter);
 
-  delay(5000);
+	inputOutputUtils.initializeInputElements();
 
-  inputOutputUtils.resetInputElements();
-  inputOutputUtils.resetOutputElements();
-  stateMachine.reset();
+	MsTimer2::set(1, samplingInputElements);
+	MsTimer2::start();
+
+	delay(5000);
+
+	inputOutputUtils.calibrateInputElements();
+
+	inputOutputUtils.initializeOutputElements();
+
+	stateMachine.reset();
 }
