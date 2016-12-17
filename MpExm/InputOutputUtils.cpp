@@ -18,7 +18,9 @@ void InputOutputUtils::calibrateInputElements(){
 
 	logger.debug("InputOutputUtils - calibrateInputElements (50segs aprox.)\n");
 
+	logger.debug("InputOutputUtils - calibrate myoware Sensor 1\n");
 	myowareSensorController1.calibration();
+	logger.debug("InputOutputUtils - calibrate myoware Sensor 2\n");
 	myowareSensorController2.calibration();
 }
 
@@ -78,9 +80,9 @@ int InputOutputUtils::getTransitionToPerform(){
 	boolean activation1 = myowareSensorController1.activation();
 	//boolean activation1 = random(2);
 	logger.debug("InputOutputUtils - myowareSensorController1 - activation: %d\n", activation1);
-	//boolean activation2 = myowareSensorController1.activation();
+	boolean activation2 = myowareSensorController2.activation();
 	//boolean activation2 = random(2);
-	//logger.debug("InputOutputUtils - myowareSensorController2 - activation: %d\n", activation2);
+	logger.debug("InputOutputUtils - myowareSensorController2 - activation: %d\n", activation2);
 
 
 	int transition = false;
