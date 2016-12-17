@@ -89,6 +89,7 @@ class InputOutputUtils{
 
 	// TODO - Llevarlo a la librería cuando corrija el embuclamiento
 	void sampling();
+	void calibrate();
 
     // Initialization of INPUT sensors
     void initializeInputElements();

@@ -2,7 +2,6 @@
 #define MyoControl_h
 
 #include <Arduino.h>
-#include "Logging.h"
 
 class MyoControl {
     public:
@@ -11,7 +10,6 @@ class MyoControl {
         void sampling();
         void calibration();
         bool activation();
-
     private:
         void blinkLED(uint8_t ledPin, unsigned int repeat, unsigned int bTime);
         void meanCalc(unsigned int meanSamples);
@@ -22,7 +20,6 @@ class MyoControl {
         double emgMean;
         double emgMvc;
         bool sampleOk;
-
 };
 
 #endif
