@@ -20,7 +20,7 @@
 // INPUT pin for MyoWare Sensor 1
 #define PIN_INPUT_MYOWARE_SENSOR_1                   A0
 // INPUT pin for MyoWare Sensor 2
-#define PIN_INPUT_MYOWARE_SENSOR_2                   A1
+#define PIN_INPUT_MYOWARE_SENSOR_2                   A5
 
 // INPUT pin for mitten related potentiometer
 #define PIN_OUTPUT_POTENTIOMETER_MITTEN              4
@@ -87,10 +87,8 @@ class InputOutputUtils{
     /* INPUT METHODS                                                         */
     /*************************************************************************/
 
-	// TODO - Llevarlo a la librería cuando corrija el embuclamiento
+	// TODO - Llevarlo a la librerï¿½a cuando corrija el embuclamiento
 	void calibrateInputElements();
-	void samplingInputElements();
-
     // Initialization of INPUT sensors
     void initializeInputElements();
 

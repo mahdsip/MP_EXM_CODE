@@ -15,21 +15,29 @@ MyoControl::MyoControl(uint8_t emg_pin) {
 }
 
 /* blinkLED blinks a led "repeat" times with a "bTime" interval between on and off */
-void MyoControl::blinkLED(uint8_t ledPin, unsigned int repeat, unsigned int bTime) {
+void MyoControl::blinkLED(uint8_t ledPin, unsigned int repeat, unsigned int blinkTime) {
     pinMode(ledPin, OUTPUT);
     unsigned int i;
     for(i=0;i<repeat;i++) {
         digitalWrite(ledPin,HIGH);
-        delay(bTime);
+        delay(blinkTime);
         digitalWrite(ledPin,LOW);
-        delay(bTime);
+        delay(blinkTime);
     }
 }
 
 /* sampling reads the ADC every 1 ms with the MsTimer2 interrupt. */
-void MyoControl::sampling() {
-    emg = analogRead(_emg_pin);
-    sampleOk = 1; // sampleOk indicates that a new sample is ready to be processed
+void MyoControl::sampling(unsigned long sampleTime) {
+    unsigned long nowTime = micros();
+    unsigned long timeChange = nowTime - prevTime;
+    if(timeChange >= 1000*sampleTime) {
+        emg = analogRead(_emg_pin);
+        sampleOk = true; // sampleOk indicates that a new sample is ready to be processed
+        prevTime = nowTime;
+    }
+    else {
+        sampleOk = false;
+    }
 }
 
 /* meanCalc computes the mean value of the EMG signal during a period of
@@ -41,9 +49,10 @@ void MyoControl::meanCalc(unsigned int meanSamples)
     while(i < meanSamples)
     {
         delayMicroseconds(50);
-        if(sampleOk==1)
+        sampling(1);
+        if(sampleOk)
         {
-            sampleOk = 0;
+            sampleOk = false;
             i++;
             emgMean = emgMean + emg*adcConv;
         }
@@ -70,8 +79,9 @@ void MyoControl::mvcCalc(unsigned int mvcSamples) {
     unsigned int i = 0;
     while(i < mvcSamples) {
         delayMicroseconds(50);
-        if(sampleOk==1) {
-            sampleOk = 0;
+        sampling(1);
+        if(sampleOk) {
+            sampleOk = false;
             i++;
             emgMovav = movAv();
             if(emgMovav > emgMvc) {
@@ -97,22 +107,20 @@ void MyoControl::calibration() {
 
 bool MyoControl::activation() {
     delayMicroseconds(50);
+    sampling(1);
     if(sampleOk) {
-        sampleOk = 0;
+        sampleOk = false;
         double emgMovav = movAv(); // Gets the amplitude of the measured EMG signal
-
         /* If the amplitude of the EMG signal is greater than the activation threshold
         (a 35% of the MVC), there is a muscle activation. */
         if(emgMovav > 0.35*emgMvc) {
-            return true;
+            isActive = true;
         }
         /* If the amplitude of the EMG signal is below the activation threshold,
         there is no muscle activation. */
         else {
-            return false;
+            isActive = false;
         }
     }
-    else {
-        return false;
-    }
+    return isActive;
 }

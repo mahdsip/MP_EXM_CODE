@@ -3,26 +3,18 @@
 #include "Constants.h"
 #include "InputOutputUtils.h"
 #include "StateMachine.h"
-#include "MsTimer2.h"
 
 #define LOGLEVEL LOG_LEVEL_DEBUG
 
 StateMachine stateMachine;
 int counter = 0;
 
-void samplingInputElements(){
-	inputOutputUtils.samplingInputElements();
-}
-
 void setup(){
   
-  logger.init(LOGLEVEL, 115200);
-  logger.debug("\n-------------> Setup\n");
+  logger.init(LOG_LEVEL_INFOS, 115200);
+  logger.info("\n-------------> Setup\n");
 
   inputOutputUtils.initializeInputElements();
-
-  MsTimer2::set(1, samplingInputElements);
-  MsTimer2::start();
 
   delay(5000);
 
@@ -39,7 +31,7 @@ void loop(){
   logger.debug("\n-------------> Loop (%d)\n", counter);
   counter++;
   stateMachine.executeTransition();
-  delay(5000);
+  delay(500);
 
 }
 
@@ -48,9 +40,6 @@ void reset(){
 	logger.debug("\n-------------> reset\n", counter);
 
 	inputOutputUtils.initializeInputElements();
-
-	MsTimer2::set(1, samplingInputElements);
-	MsTimer2::start();
 
 	delay(5000);
 

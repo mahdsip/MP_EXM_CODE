@@ -1,5 +1,4 @@
 #include "InputOutputUtils.h"
-#include "MsTimer2.h"
 
 
 /******************************************************************************/
@@ -16,20 +15,12 @@ void InputOutputUtils::initializeInputElements(){
 
 void InputOutputUtils::calibrateInputElements(){
 
-	logger.debug("InputOutputUtils - calibrateInputElements (50segs aprox.)\n");
+	logger.info("InputOutputUtils - calibrateInputElements (50segs aprox.)\n");
 
-	logger.debug("InputOutputUtils - calibrate myoware Sensor 1\n");
+	logger.info("InputOutputUtils - calibrate myoware Sensor 1\n");
 	myowareSensorController1.calibration();
-	logger.debug("InputOutputUtils - calibrate myoware Sensor 2\n");
+	logger.info("InputOutputUtils - calibrate myoware Sensor 2\n");
 	myowareSensorController2.calibration();
-}
-
-void InputOutputUtils::samplingInputElements(){
-
-	//logger.debug("InputOutputUtils - sampling\n");
-
-	myowareSensorController1.sampling();
-	myowareSensorController2.sampling();
 }
 
 void InputOutputUtils::resetInputElements(){
@@ -78,19 +69,24 @@ int InputOutputUtils::getTransitionToPerform(){
     logger.debug("InputOutputUtils - getTransitionToPerform\n");
 
 	boolean activation1 = myowareSensorController1.activation();
+  //boolean activation1 = 0;
 	//boolean activation1 = random(2);
-	logger.debug("InputOutputUtils - myowareSensorController1 - activation: %d\n", activation1);
+	logger.info("InputOutputUtils - myowareSensorController1 - activation: %d\n", activation1);
 	boolean activation2 = myowareSensorController2.activation();
+  //boolean activation2 = 0;
 	//boolean activation2 = random(2);
-	logger.debug("InputOutputUtils - myowareSensorController2 - activation: %d\n", activation2);
+	logger.info("InputOutputUtils - myowareSensorController2 - activation: %d\n", activation2);
 
 
 	int transition = false;
-	if (activation1)
-		//|| activation2)
-		transition = STATE_FIST;
-	else{
+	if (!activation1 && !activation2)
 		transition = STATE_IDLE;
+	else if(!activation1 && activation2){
+		transition = STATE_FINGER;
+	}else if(activation1 && !activation2){
+	  transition = STATE_TONGS;
+	}else{
+	  transition = STATE_FIST;
 	}
 
    //return test.testInputForTransition();
