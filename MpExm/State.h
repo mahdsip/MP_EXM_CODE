@@ -2,15 +2,16 @@
 #define STATE_H
 
 #include "Constants.h"
+#include "State.h"
 
 class State{
 
-  private:
+	private:
 
-  // Current state
+	// Current state
     int currentState;
 
-  public:
+	public:
 
 	// Constructor
     State();
@@ -22,22 +23,16 @@ class State{
     int  getCurrentState();
     void setCurrentState(int state);
 
-	// Detects mitten position
-    // TODO: Two solutions for fingers position
-    //    - Detects where the finger is
-    //    - Trust where the state says we are
+	// Detects mitten position from
+	// current state
     int getMittenPosition();
 
-	// Detects forefinger position
-    // TODO: Two solutions for fingers position
-    //    - Detects where the finger is
-    //    - Trust where the state says we are
+	// Detects forefinger position from
+	// current state
     int getForefingerPosition();
 
-	// Detects thumb position
-    // TODO: Two solutions for fingers position
-    //    - Detects where the finger is
-    //    - Trust where the state says we are
+	// Detects thumb position from
+    // current state
     int getThumbPosition();
 
   };

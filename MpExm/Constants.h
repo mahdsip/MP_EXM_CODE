@@ -1,7 +1,6 @@
 #include <Arduino.h>
 
 #include "Logging.h"
-#include "InputOutputUtils.h"
 
 #ifndef CONSTANTS_H
 #define CONSTANTS_H
@@ -65,11 +64,12 @@
 #define TRANSITION_TO_FIST             5
 
 // Fingers position matrix from states definition
-// TODO: Considerar todos los posibles estados
+// TODO: Considerar todos los posibles estados o eliminar estados 
+//       segun necesidades
 
 const int FINGER_POSITION_MATRIX[STATES_NUMBER][FINGERS] = {
 
- // MITTEN   FORE  THUMB
+    // MITTEN   FORE  THUMB
     { OPEN,  OPEN,  OPEN  }, // STATE_INACTIVE
     { OPEN,  OPEN,  OPEN  }, // STATE_IDLE
     { OPEN,  CLOSE, CLOSE }, // STATE_TONGS

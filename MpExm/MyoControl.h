@@ -4,6 +4,7 @@
 #include <Arduino.h>
 
 class MyoControl {
+	
     public:
 	    MyoControl();
         MyoControl(uint8_t emg_pin);

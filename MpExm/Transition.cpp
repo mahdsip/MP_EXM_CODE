@@ -5,75 +5,75 @@
 /******************************************************************************/
 
 Transition::Transition(){
-  logger.debug("Transition - Transition\n");
+	logger.debug("Transition - Transition\n");
 }
 
 void Transition::reset(){
 
-  logger.debug("Transition - reset\n");
+	logger.debug("Transition - reset\n");
 
-  transitionToInactive();
+	transitionToInactive();
 }
 
-int Transition::getTransitionToPerform(){
+int Transition::getTransitionToPerform(State state){
 
-  logger.debug("Transition - getTransitionToPerform\n");
+	logger.debug("Transition - getTransitionToPerform\n");
 
-  return inputOutputUtils.getTransitionToPerform();
+	return inputOutputUtils.getTransitionToPerform(state);
 }
 
 void Transition::transitionToInactive(){
 
-  logger.debug("Transition - transitionToInactive\n");
+	logger.debug("Transition - transitionToInactive\n");
 
-  openMitten();
-  openForefinger();
-  openThumb();
+	openMitten();
+	openForefinger();
+	openThumb();
 }
 
 void Transition::transitionToIdle(){
 
-  logger.debug("Transition - transitionToIdle\n");
+	logger.debug("Transition - transitionToIdle\n");
 
-  openMitten();
-  openForefinger();
-  openThumb();
+	openMitten();
+	openForefinger();
+	openThumb();
 }
 
 void Transition::transitionToTongs(){
 
-  logger.debug("Transition - transitionToTongs\n");
+	logger.debug("Transition - transitionToTongs\n");
 
-  openMitten();
-  closeForefinger();
-  closeThumb();
+	openMitten();
+	closeForefinger();
+	closeThumb();
 }
 
 void Transition::transitionToFinger(){
 
-  logger.debug("Transition - transitionToFinger\n");
+	logger.debug("Transition - transitionToFinger\n");
 
-  closeMitten();
-  openForefinger();
-  closeThumb();
+	closeMitten();
+	openForefinger();
+	closeThumb();
 }
 
 void Transition::transitionToClose(){
 
-  logger.debug("Transition - transitionToClose\n");
+	logger.debug("Transition - transitionToClose\n");
 
-  closeMitten();
-  closeForefinger();
-  openThumb();
+	closeMitten();
+	closeForefinger();
+	openThumb();
 }
 
 void Transition::transitionToFist(){
 
-  logger.debug("Transition - transitionToFist\n");
+	logger.debug("Transition - transitionToFist\n");
 
-  closeMitten();
-  closeForefinger();
-  closeThumb();
+	closeMitten();
+	closeForefinger();
+	closeThumb();
 }
 
 /******************************************************************************/

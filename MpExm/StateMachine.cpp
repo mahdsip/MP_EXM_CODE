@@ -1,4 +1,5 @@
 #include "StateMachine.h"
+#include "Constants.h"
 
 /******************************************************************************/
 /* PUBLIC METHODS                                                             */
@@ -9,19 +10,23 @@ void StateMachine::start(){
   logger.debug("StateMachine - start\n");
 
   state = State();
+  // TODO: Puesto a IDLE para que partamos en las pruebas 
+  // de un estado desde el que podamos hacer movimientos.
+  // Deberiamos arrancar en INNACTIVE
+  state.setCurrentState(STATE_IDLE);
   transition = Transition();
 }
 
 void StateMachine::executeTransition(){
 
     logger.debug("StateMachine - executeTransition\n");
-
-	// TODELETE: Empezamos en idle para poder testear
-	state.setCurrentState(STATE_IDLE);
-
+    
     int currentState = state.getCurrentState();
 
-    int transitionToPeform = transition.getTransitionToPerform();
+    int transitionToPeform = transition.getTransitionToPerform(state);
+
+    logger.debug("StateMachine - executeTransition - transition to perform: %i\n", 
+	             transitionToPeform);
 
     switch(transitionToPeform){
 

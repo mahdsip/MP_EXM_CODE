@@ -1,222 +1,308 @@
 #include "InputOutputUtils.h"
 
-
 /******************************************************************************/
-/* PUBLIC INPUT METHODS                                                       */
+/* INITIALIZATION INPUT METHODS                                               */
 /******************************************************************************/
 
-void InputOutputUtils::initializeInputElements(){
+void InputOutputUtils::initializeInputElements() {
 
-	logger.debug("InputOutputUtils - initializeInputElements\n");
+	logger.debug("InputOutputUtils - initializeInputElements (50segs aprox.)\n");
 
 	myowareSensorController1 = MyoControl(PIN_INPUT_MYOWARE_SENSOR_1);
 	myowareSensorController2 = MyoControl(PIN_INPUT_MYOWARE_SENSOR_2);
-}
+  
+	delay(500);
 
-void InputOutputUtils::calibrateInputElements(){
-
-	logger.info("InputOutputUtils - calibrateInputElements (50segs aprox.)\n");
-
-	logger.info("InputOutputUtils - calibrate myoware Sensor 1\n");
+	logger.info("InputOutputUtils - initializeInputElements - Calibrate myoware Sensor 1\n");
 	myowareSensorController1.calibration();
-	logger.info("InputOutputUtils - calibrate myoware Sensor 2\n");
+	logger.info("InputOutputUtils - initializeInputElements - Calibrate myoware Sensor 2\n");
 	myowareSensorController2.calibration();
-}
-
-void InputOutputUtils::resetInputElements(){
-
-  logger.debug("InputOutputUtils - resetInputElements\n");
-
-  myowareSensorController1.calibration();
-  myowareSensorController2.calibration();
+	
+	//test.testInitializeLedStripe();
 
 }
 
-int InputOutputUtils::getMittenPosition(){
+void InputOutputUtils::resetInputElements() {
 
-  //TODO: What happens if finger position is diferent to current position?
-  int mittenPosition = random(0,1);
+	logger.debug("InputOutputUtils - resetInputElements\n");
 
-  logger.debug("InputOutputUtils - getMittenPosition - Mitten position: %i\n", mittenPosition);
-
-  return mittenPosition;
+	myowareSensorController1.calibration();
+	myowareSensorController2.calibration();
 
 }
 
-int InputOutputUtils::getForefingerPosition(){
+/******************************************************************************/
+/* INITIALIZATION OUTPUT METHODS                                              */
+/******************************************************************************/
 
-  //TODO: What happens if finger position is diferent to current position?
-  int forefingerPosition = random(0,2);
-
-  logger.debug("InputOutputUtils - getForefingerPosition - Forefinger position: %i\n", forefingerPosition);
-
-  return forefingerPosition;
-}
-
-int InputOutputUtils::getThumbPosition(){
-
-  //TODO: What happens if finger position is diferent to current position?
-  int thumbPosition = random(0,2);
-
-  logger.debug("getThumbPosition - Thumb position: %i\n", thumbPosition);
-
-  return thumbPosition;
-
-}
-
-int InputOutputUtils::getTransitionToPerform(){
-
-    logger.debug("InputOutputUtils - getTransitionToPerform\n");
-
-	boolean activation1 = myowareSensorController1.activation();
-  //boolean activation1 = 0;
-	//boolean activation1 = random(2);
-	logger.info("InputOutputUtils - myowareSensorController1 - activation: %d\n", activation1);
-	boolean activation2 = myowareSensorController2.activation();
-  //boolean activation2 = 0;
-	//boolean activation2 = random(2);
-	logger.info("InputOutputUtils - myowareSensorController2 - activation: %d\n", activation2);
+void InputOutputUtils::initializeOutputElements() {
 
 
-	int transition = false;
-	if (!activation1 && !activation2)
-		transition = STATE_IDLE;
-	else if(!activation1 && activation2){
-		transition = STATE_FINGER;
-	}else if(activation1 && !activation2){
-	  transition = STATE_TONGS;
-	}else{
-	  transition = STATE_FIST;
+	logger.info("InputOutputUtils - initializeOutputElements\n");
+
+	// Initialize motors pinout
+	pinMode(MUX_A, OUTPUT);
+	pinMode(MUX_B, OUTPUT);
+	pinMode(MUX_C, OUTPUT);
+  
+	// Initialize motors pinout
+	pinMode(PIN_OUTPUT_MOTOR_MITTEN_PWM, OUTPUT);
+	pinMode(PIN_OUTPUT_MOTOR_MITTEN, OUTPUT);
+	pinMode(PIN_OUTPUT_MOTOR_FOREFINGER_PWM, OUTPUT);
+	pinMode(PIN_OUTPUT_MOTOR_FOREFINGER, OUTPUT);
+	pinMode(PIN_OUTPUT_MOTOR_THUMB_PWM, OUTPUT);
+	pinMode(PIN_OUTPUT_MOTOR_THUMB, OUTPUT);
+
+	if(getMittenPosition() == CLOSE){
+		logger.info("InputOutputUtils - Open mitten\n");
+		motorControl(MITTEN,OPEN,100);
+		delay(1000);
 	}
 
-   //return test.testInputForTransition();
-   return transition;
+	if(getForefingerPosition() == CLOSE){
+		logger.info("InputOutputUtils - Open forefinger\n");
+		motorControl(FOREFINGER,OPEN,TEST_SPEED);
+		delay(1000);
+	}
+
+	if(getThumbPosition() == CLOSE){
+		logger.info("InputOutputUtils - Open thumb\n");
+		motorControl(THUMB,OPEN,TEST_SPEED);
+		delay(1000);
+	}
+	
+	//currentState.setCurrentState(STATE_INACTIVE);
+	
+  //test.testOutputWithLedStripe(0,0,0);
+	//delay(2000);
+	//test.testOutputWithLedStripe(0,255,0);
+
+}
+
+void InputOutputUtils::resetOutputElements() {
+
+	logger.debug("InputOutputUtils - resetOutputElements\n");
+
+	initializeOutputElements();
+
+}
+
+
+/******************************************************************************/
+/* FINGERS POSITION                                                           */
+/******************************************************************************/
+
+int InputOutputUtils::getMittenPosition() {
+
+	//TODO: What happens if finger position is diferent to current position?
+	// Tenedremos que revisar en qué posicion se encuentar el dedo realmente para 
+	// restaurar la posicion si es necesario.
+	int mittenPosition = currentState.getMittenPosition();
+
+	logger.info("InputOutputUtils - getMittenPosition - Mitten position: %i\n", mittenPosition);
+
+	return mittenPosition;
+
+}
+
+int InputOutputUtils::getForefingerPosition() {
+
+	// TODO: What happens if finger position is diferent to current position?
+	// Tenedremos que revisar en qué posicion se encuentar el dedo realmente para 
+	// restaurar la posicion si es necesario.
+	int forefingerPosition = currentState.getForefingerPosition();
+
+	logger.debug("InputOutputUtils - getForefingerPosition - Forefinger position: %i\n", forefingerPosition);
+
+	return forefingerPosition;
+}
+
+int InputOutputUtils::getThumbPosition() {
+
+	//TODO: What happens if finger position is diferent to current position?
+	// Tenedremos que revisar en qué posicion se encuentar el dedo realmente para 
+	// restaurar la posicion si es necesario.
+	int thumbPosition = currentState.getThumbPosition();
+
+	logger.debug("getThumbPosition - Thumb position: %i\n", thumbPosition);
+
+	return thumbPosition;
+
 }
 
 /******************************************************************************/
-/* PUBLIC OUTPUT METHODS                                                     */
+/* TRANSITIONS                                                                */
 /******************************************************************************/
 
-void InputOutputUtils::initializeOutputElements(){
+int InputOutputUtils::getTransitionToPerform(State state) {
+
+	logger.debug("InputOutputUtils - getTransitionToPerform\n");
+
+	currentState = state;
+
+	/*
+	boolean activation1 = myowareSensorController1.activation();
+	logger.info("InputOutputUtils - myowareSensorController1 - activation: %d\n", activation1);
+	// TODO - Cambiar la forma en la que leemos del sensor, pasando por el multiplexor
+	readMultiplexorInput(CONTROL_INPUT_MYOWARE_SENSOR_1);
+	boolean activation2 = myowareSensorController2.activation();
+	// TODO - Cambiar la forma en la que leemos del sensor, pasando por el multiplexor
+	readMultiplexorInput(CONTROL_INPUT_MYOWARE_SENSOR_2);
+	logger.info("InputOutputUtils - myowareSensorController2 - activation: %d\n", activation2);
+
+	int transitionTo = 0;
+	if (!activation1 && !activation2){
+		logger.info("InputOutputUtils - IDLE\n");
+		transitionTo = STATE_IDLE;
+	}else if (!activation1 && activation2) {
+		logger.info("InputOutputUtils - FINGERS\n");
+		transitionTo = STATE_FINGER;
+	} else if (activation1 && !activation2) {
+		logger.info("InputOutputUtils - TONGS\n");
+		transitionTo = STATE_TONGS;
+	} else {
+		logger.info("InputOutputUtils - FIST\n");
+		transitionTo = STATE_FIST;
+	}
+	*/
+	
+	// TODELETE: Funcionalidad que permite hacer tests con el motor
+	// sin depender de los sensores
+	static int i = 0;
+	int transitionTo = 0;
+
+	transitionTo = ((i++)%STATES_NUMBER);
+
+	return transitionTo;
+	
+}
 
 
-  logger.debug("InputOutputUtils - initializeOutputElements\n");
+void InputOutputUtils::openMitten() {
 
-  randomSeed(0);
+	logger.debug("InputOutputUtils - openMitten\n");
 
-  // Led Stripe Initialization
-  ledStripe = Adafruit_NeoPixel(10, PIN_OUTPUT_LED_STRIPE, NEO_GRB + NEO_KHZ800);
-  ledStripe.begin();
-
-  ledStripe.setPixelColor(0, ledStripe.Color(0, 0, 0));
-  ledStripe.setPixelColor(1, ledStripe.Color(0, 0, 0));
-  ledStripe.setPixelColor(2, ledStripe.Color(0, 0, 0));
-  ledStripe.setPixelColor(3, ledStripe.Color(0, 0, 0));
-  ledStripe.setPixelColor(4, ledStripe.Color(0, 0, 0));
-  ledStripe.show();
-
-  delay(5000);
-
-  ledStripe.setPixelColor(0, ledStripe.Color(0, 255, 0));
-  ledStripe.setPixelColor(1, ledStripe.Color(0, 255, 0));
-  ledStripe.setPixelColor(2, ledStripe.Color(0, 255, 0));
-  ledStripe.setPixelColor(3, ledStripe.Color(0, 255, 0));
-  ledStripe.setPixelColor(4, ledStripe.Color(0, 255, 0));
-  ledStripe.show();
-
-  // Motors initialization
-  //motorMitten.attach(PIN_OUTPUT_SERVO_MITTEN);
-  //motorForefinger.attach(PIN_OUTPUT_SERVO_FOREFINGER);
-  //motorThumb.attach(PIN_OUTPUT_SERVO_THUMB);
-
-  mittenPosition = 0;
-  forefingerPosition = 0;
-  thumbPosition = 0;
+  
+	if(getMittenPosition() == CLOSE){
+		logger.info("InputOutputUtils - openMitten - OPEN\n");
+		test.testOutputWithLedStripe(0,0,255,0);
+		test.testOutputWithLedStripe(1,0,255,0);
+		test.testOutputWithLedStripe(2,0,255,0);
+		motorControl(MITTEN, OPEN, TEST_SPEED);
+	}
 
 }
 
-void InputOutputUtils::resetOutputElements(){
+void InputOutputUtils::closeMitten() {
 
-  logger.debug("InputOutputUtils - resetOutputElements\n");
+	logger.debug("InputOutputUtils - closeMitten\n");
+  
+	if(getMittenPosition() == OPEN){
+		logger.info("InputOutputUtils - closeMitten - CLOSE\n");
+		test.testOutputWithLedStripe(0,255,0,0);
+		test.testOutputWithLedStripe(1,255,0,0);
+		test.testOutputWithLedStripe(2,255,0,0);
+		motorControl(MITTEN, CLOSE, 100);
+	}
+}
 
-  randomSeed(0);
+void InputOutputUtils::openForefinger() {
 
-  ledStripe.setPixelColor(0, ledStripe.Color(0, 255, 0));
-  ledStripe.setPixelColor(1, ledStripe.Color(0, 255, 0));
-  ledStripe.setPixelColor(2, ledStripe.Color(0, 255, 0));
-  ledStripe.setPixelColor(3, ledStripe.Color(0, 255, 0));
-  ledStripe.setPixelColor(4, ledStripe.Color(0, 255, 0));
-  ledStripe.show();
+	logger.debug("InputOutputUtils - openForefinger\n");
 
-  mittenPosition = 0;
-  forefingerPosition = 0;
-  thumbPosition = 0;
+	if(getForefingerPosition() == CLOSE){
+		logger.debug("InputOutputUtils - openForefinger - OPEN\n");
+		test.testOutputWithLedStripe(3,0,255,0);
+		motorControl(FOREFINGER, OPEN, TEST_SPEED);	
+	}
+}
+
+void InputOutputUtils::closeForefinger() {
+
+	logger.debug("InputOutputUtils - closeForefinger\n");
+
+	if(getForefingerPosition() == OPEN){
+		logger.debug("InputOutputUtils - closeForefinger - CLOSE\n");
+		test.testOutputWithLedStripe(3,255,0,0);
+		motorControl(FOREFINGER, CLOSE,TEST_SPEED);
+	}
+}
+
+void InputOutputUtils::openThumb() {
+
+	logger.debug("InputOutputUtils - openThumb\n");
+
+	if(getThumbPosition() == CLOSE){
+		logger.debug("InputOutputUtils - openThumb - OPEN\n");
+		test.testOutputWithLedStripe(4,0,255,0);
+		motorControl(THUMB,OPEN,TEST_SPEED);
+	}
 
 }
 
-void InputOutputUtils::openMitten(){
+void InputOutputUtils::closeThumb() {
 
-  logger.debug("InputOutputUtils - openMitten\n");
+	logger.debug("InputOutputUtils - closeThumb\n");
 
-  // TODO: Don't move if current position is the same as selected
-  ledStripe.setPixelColor(0, ledStripe.Color(0, 255, 0));
-  ledStripe.setPixelColor(1, ledStripe.Color(0, 255, 0));
-  ledStripe.setPixelColor(2, ledStripe.Color(0, 255, 0));
-  ledStripe.show();
+	if(getThumbPosition() == CLOSE){
+		logger.debug("InputOutputUtils - closeThumb - CLOSE\n");
+		test.testOutputWithLedStripe(4,255,0,0);
+		motorControl(THUMB,CLOSE,TEST_SPEED);
+	}
 
 }
 
-void InputOutputUtils::closeMitten(){
 
-  logger.debug("InputOutputUtils - closeMitten\n");
+/******************************************************************************/
+/* PCB CONTROLS                                                               */
+/******************************************************************************/
 
-  // TODO: Don't move if current position is the same as selected
-  ledStripe.setPixelColor(0, ledStripe.Color(255, 0, 0));
-  ledStripe.setPixelColor(1, ledStripe.Color(255, 0, 0));
-  ledStripe.setPixelColor(2, ledStripe.Color(255, 0, 0));
-  ledStripe.show();
+
+void InputOutputUtils::motorControl(int motorID, int motorDir, int motorSpeed) {
+
+	// Forward Direction --> CLOSE --> 1
+	if (motorDir) { 
+		digitalWrite(MOTOR_CONTROL_MATRIX[motorID][1], LOW);
+		analogWrite(MOTOR_CONTROL_MATRIX[motorID][0], motorSpeed);
+		delay(1000);
+		// Parar el motor
+		analogWrite(MOTOR_CONTROL_MATRIX[motorID][0], 0);
+
+	// Backward Direction --> OPEN --> 0
+	} else {
+		digitalWrite(MOTOR_CONTROL_MATRIX[motorID][1], HIGH);
+		analogWrite(MOTOR_CONTROL_MATRIX[motorID][0], motorSpeed);
+		delay(1000);
+		// Parar el motor
+		analogWrite(MOTOR_CONTROL_MATRIX[motorID][0], 0);
+	}
   
 }
 
-void InputOutputUtils::openForefinger(){
 
-  logger.debug("InputOutputUtils - openForefinger\n");
+int InputOutputUtils::readMultiplexorInput(int controlId){
 
-  // TODO: Don't move if current position is the same as selected
-  ledStripe.setPixelColor(3, ledStripe.Color(0, 255, 0));
-  ledStripe.show();
+	// Main Multiplexer (vs Acc Multiplexer)
+		
+	// Lecture Sensors through 74HC4051 Multiplexer
+	// Entry channel selection for 74HC4051
+	
+	logger.info("InputOutputUtils - readMultiplexorInput - input[%i]\n", controlId);
+
+	int cA = controlId & 0x01;   
+	int cB = (controlId>>1) & 0x01;     
+	int cC = (controlId>>2) & 0x01;   
+	
+	digitalWrite(MUX_A, cA);
+	digitalWrite(MUX_B, cB);
+	digitalWrite(MUX_C, cC);
   
-}
+	int readedValue = analogRead(MUX_MAIN);
 
-void InputOutputUtils::closeForefinger(){
-
-  logger.debug("InputOutputUtils - closeForefinger\n");
-
-  // TODO: Don't move if current position is the same as selected
-  ledStripe.setPixelColor(3, ledStripe.Color(255, 0, 0));
-  ledStripe.show();
+	logger.info("InputOutputUtils - readMultiplexorInput - output[%i]\n", readedValue);
+	
+	return readedValue;
 
 }
-
-void InputOutputUtils::openThumb(){
-
-  logger.debug("InputOutputUtils - openThumb\n");
-
-  // TODO: Don't move if current position is the same as selected
-  ledStripe.setPixelColor(4, ledStripe.Color(0, 255, 0));
-  ledStripe.show();
-
-}
-
-void InputOutputUtils::closeThumb(){
-
-  logger.debug("InputOutputUtils - closeThumb\n");
-  
-  // TODO: Don't move if current position is the same as selected
-  ledStripe.setPixelColor(4, ledStripe.Color(255, 0, 0));
-  ledStripe.show();
-  
-}
-
 
 InputOutputUtils inputOutputUtils = InputOutputUtils();

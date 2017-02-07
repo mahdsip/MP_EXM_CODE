@@ -1,11 +1,11 @@
 #ifndef TRANSITION_H
 #define TRANSITION_H
 
-#include "Constants.h"
+#include "InputOutputUtils.h"
 
 class Transition{
 
- private:
+	private:
 
     // Moves mitten to OPEN postion if necesary
     void openMitten();
@@ -22,7 +22,7 @@ class Transition{
 	// Moves thumb to CLOSE postion if necesary
     void closeThumb();
 	
-  public:
+	public:
 
 	// Constructor
     Transition();
@@ -31,7 +31,7 @@ class Transition{
     void reset();
 
 	// Gets the state selected by user from input elements feedback
-    int getTransitionToPerform();
+    int getTransitionToPerform(State state);
 
 	// Goes to innactive state depending on the current one
     void transitionToInactive();
