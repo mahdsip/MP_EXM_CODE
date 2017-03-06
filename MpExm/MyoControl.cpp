@@ -9,9 +9,10 @@ static const double adcConv = adcRef/adcRes;
 MyoControl::MyoControl() {
 }
 
-MyoControl::MyoControl(uint8_t emg_pin) {
-    pinMode(emg_pin, INPUT);
-    emg_pin = _emg_pin;
+MyoControl::MyoControl(int aControlId) {
+    //pinMode(emg_pin, INPUT);
+    //emg_pin = _emg_pin;
+	controlId = aControlId;
 }
 
 /* blinkLED blinks a led "repeat" times with a "bTime" interval between on and off */
@@ -31,7 +32,8 @@ void MyoControl::sampling(unsigned long sampleTime) {
     unsigned long nowTime = micros();
     unsigned long timeChange = nowTime - prevTime;
     if(timeChange >= 1000*sampleTime) {
-        emg = analogRead(_emg_pin);
+	
+        emg = multiplexorRead();
         sampleOk = true; // sampleOk indicates that a new sample is ready to be processed
         prevTime = nowTime;
     }
@@ -94,14 +96,14 @@ void MyoControl::mvcCalc(unsigned int mvcSamples) {
 void MyoControl::calibration() {
     /* System calibration */
     /* Calibration step #1: calculate the baseline of the signal during 10 s */
-    blinkLED(13,1,500); // LED blinks once to indicate calibration step #1 start
+    blinkLED(PIN_OUTPUT_LED_RGB,1,500); // LED blinks once to indicate calibration step #1 start
     meanCalc(10000);
-    blinkLED(13,1,500); // LED blinks once to indicate calibration step #1 end
+    blinkLED(PIN_OUTPUT_LED_RGB,1,500); // LED blinks once to indicate calibration step #1 end
     delay(1000);
     /* Calibration step #2: calculate the maximum voluntary contraction during 5 s*/
-    blinkLED(13,2,500); // LED blinks twice to indicate calibration step #2 start
+    blinkLED(PIN_OUTPUT_LED_RGB,2,500); // LED blinks twice to indicate calibration step #2 start
     mvcCalc(5000);
-    blinkLED(13,2,500); // LED bliks twice to indicate calibration step #2 end
+    blinkLED(PIN_OUTPUT_LED_RGB,2,500); // LED bliks twice to indicate calibration step #2 end
     delay(1000);
 }
 
@@ -123,4 +125,21 @@ bool MyoControl::activation() {
         }
     }
     return isActive;
+}
+
+
+int MyoControl::multiplexorRead(){
+
+	int cA = controlId & 0x01;   
+	int cB = (controlId>>1) & 0x01;     
+	int cC = (controlId>>2) & 0x01;   
+	
+	digitalWrite(MUX_A, cA);
+	digitalWrite(MUX_B, cB);
+	digitalWrite(MUX_C, cC);
+  
+	int readedValue = analogRead(MUX_MAIN);
+	
+	return readedValue;
+
 }

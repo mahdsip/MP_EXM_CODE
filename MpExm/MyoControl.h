@@ -2,12 +2,13 @@
 #define MyoControl_h
 
 #include <Arduino.h>
+#include "Constants.h"
 
 class MyoControl {
 	
     public:
 	    MyoControl();
-        MyoControl(uint8_t emg_pin);
+        MyoControl(int aControlId);
         void sampling(unsigned long sampleTime);
         void calibration();
         bool activation();
@@ -16,7 +17,9 @@ class MyoControl {
         void meanCalc(unsigned int meanSamples);
         double movAv();
         void mvcCalc(unsigned int mvcSamples);
-        uint8_t _emg_pin;
+		int multiplexorRead();
+        //uint8_t _emg_pin;
+		int controlId;
         volatile unsigned int emg;
         double emgMean, emgMvc;
         bool sampleOk, isActive;

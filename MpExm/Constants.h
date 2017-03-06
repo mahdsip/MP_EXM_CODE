@@ -30,15 +30,15 @@
 #define STATES_NUMBER                  6
 // Inactive state (inactivo)
 #define STATE_INACTIVE                 0
-// Resting/Initial state. Open hand (reposo)
+// Resting/Initial state. Open hand
 #define STATE_IDLE                     1
-// Tongs state. Thumb + forefinger (pinza)
+// Tongs state. Thumb + forefinger
 #define STATE_TONGS                    2
-// Finger state. Forefinger  (señalar)
+// Finger state. Forefinger
 #define STATE_FINGER                   3
-// Close state. Mitten + forefinger (ok)
+// Close state. Mitten + forefinger
 #define STATE_CLOSE                    4
-// Fist state. Mitten + forefinger + thumb (cerrado, puño)
+// Fist state. Mitten + forefinger + thumb
 #define STATE_FIST                     5
 
 
@@ -77,6 +77,100 @@ const int FINGER_POSITION_MATRIX[STATES_NUMBER][FINGERS] = {
     { CLOSE, CLOSE, OPEN  }, // STATE_CLOSE
     { CLOSE, CLOSE, CLOSE }  // STATE_FIST
 };
+
+
+/*****************************************************************************/
+/* PIN DESCRIPTION                                                           */
+/*****************************************************************************/
+
+// Min Value for motors speed
+#define MOTOR_SPEED_MIN   0  
+// Max Value for motors speed
+#define MOTOR_SPEED_MAX 255  
+
+// CONFIGURABLE VALUE: Motor Speed
+#define MOTOR_SPEED      100  
+// CONFIGURABLE VALUE: Potentiometer Tolerance
+#define POTENTIOMETER_TOLERANCE  150  
+
+// INPUT pin for tactile switch
+//#define PIN_INPUT_SWITH                            1
+// OUTPUT pin for LED RGB
+#define PIN_OUTPUT_LED_RGB                          13
+// OUTPUT pin for bluetoothpe
+//#define PIN_OUTPUT_BLUETOOTH                      15                            
+
+// Accesory Board Detection
+#define ACC_BRD 
+// Multiplexer Control Crazy Pionut Assignement A
+#define MUX_A                                       16 
+// Multiplexer Control Crazy Pionut Assignement B
+#define MUX_B                                       14 
+// Multiplexer Control Crazy Pionut Assignement C
+#define MUX_C                                       15 
+// Main Board Multiplexer Output
+#define MUX_MAIN                                     0
+// Acc Board Multiplexer Output 
+#define MUX_ACC                                      1 
+
+// INPUT pin for MyoWare Sensor 1
+//#define PIN_INPUT_MYOWARE_SENSOR_1                   0
+// INPUT pin for MyoWare Sensor 2
+//#define PIN_INPUT_MYOWARE_SENSOR_2                   1
+
+// INPUT pin for mitten related potentiometer
+#define PIN_OUTPUT_POTENTIOMETER_MITTEN              2
+// INPUT pin for forefinger related potentiometer
+#define PIN_OUTPUT_POTENTIOMETER_FOREFINGER          4
+// INPUT pin for thumb related potentiometer
+#define PIN_OUTPUT_POTENTIOMETER_THUMB               6
+
+// INPUT pin for mitten related amperimeter
+#define PIN_OUTPUT_CURRENT_SENSOR_MITTEN             3
+// INPUT pin for forefinger related amperimeter
+#define PIN_OUTPUT_CURRENT_SENSOR_FOREFINGER         5
+// INPUT pin for thumb related amperimeter
+#define PIN_OUTPUT_CURRENT_SENSOR_THUMB              7
+
+// OUTPUT pin for mitten related motor
+#define PIN_OUTPUT_MOTOR_MITTEN_PWM                  9
+#define PIN_OUTPUT_MOTOR_MITTEN                      8
+// OUTPUT pin for forefinger related motor
+#define PIN_OUTPUT_MOTOR_FOREFINGER_PWM              5
+#define PIN_OUTPUT_MOTOR_FOREFINGER                  7
+// OUTPUT pin for thumb related motor
+#define PIN_OUTPUT_MOTOR_THUMB_PWM                   3
+#define PIN_OUTPUT_MOTOR_THUMB                       4
+
+//Motor Control Matrix
+const int MOTOR_CONTROL_MATRIX[FINGERS][2] = 
+   {{PIN_OUTPUT_MOTOR_MITTEN_PWM, PIN_OUTPUT_MOTOR_MITTEN},
+    {PIN_OUTPUT_MOTOR_FOREFINGER_PWM, PIN_OUTPUT_MOTOR_FOREFINGER},
+    {PIN_OUTPUT_MOTOR_THUMB_PWM, PIN_OUTPUT_MOTOR_THUMB}};   
+
+
+// Multiplexor Control Matrix
+// MYO_0
+#define CONTROL_INPUT_MYOWARE_SENSOR_1          0
+//MYO_1
+#define CONTROL_INPUT_MYOWARE_SENSOR_2          1
+// MPOT_0
+#define CONTROL_INPUT_POTENTIOMETER_MITTEN      2
+// CS_0
+#define CONTROL_INPUT_CURRENT_SENSOR_MITTEN     3
+// MPOT_1
+#define CONTROL_INPUT_POTENTIOMETER_FOREFINGER  4
+// CS_1
+#define CONTROL_INPUT_CURRENT_SENSOR_FOREFINGER 5
+// MPOT_2
+#define CONTROL_INPUT_POTENTIOMETER_THUMB       6
+// CS_2
+#define CONTROL_INPUT_CURRENT_SENSOR_THUMB      7
+
+// const int muxOut[2] = {MUX_MAIN, MUX_ACC};
+// Mux Main and Mux Acc Value Store
+// const int muxVal[2][8]; 
+
 
 
 #endif

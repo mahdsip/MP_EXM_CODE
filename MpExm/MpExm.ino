@@ -1,5 +1,3 @@
-#include <Servo.h>
-#include <Adafruit_NeoPixel.h>
 #include "Constants.h"
 #include "InputOutputUtils.h"
 #include "StateMachine.h"
@@ -21,7 +19,7 @@ void setup(){
 	stateMachine.start();
 
 }
-
+  
 void loop(){
 
 	logger.info("\n-------------> Loop (%d)\n", counter);
