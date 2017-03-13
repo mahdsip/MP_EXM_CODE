@@ -1,5 +1,4 @@
 #include <Arduino.h>
-
 #include "Logging.h"
 
 #ifndef CONSTANTS_H
@@ -46,7 +45,7 @@
 /* TRANSITIONS                                                           */
 /*************************************************************************/
 // Transition Number
-#define TRANSITIONS_NUMBER             6
+//#define TRANSITIONS_NUMBER             6
 
 // Transition to inactive state
 #define INVALID_TRANSITION            -1
@@ -78,30 +77,32 @@ const int FINGER_POSITION_MATRIX[STATES_NUMBER][FINGERS] = {
     { CLOSE, CLOSE, CLOSE }  // STATE_FIST
 };
 
+/*************************************************************************/
+/* MOTORS                                                                */
+/*************************************************************************/
+
+// Min Value for motors speed
+#define MOTOR_SPEED_MIN   0
+// Max Value for motors speed
+#define MOTOR_SPEED_MAX  255
+// CONFIGURABLE VALUE: Motor Speed
+#define MOTOR_SPEED      100
+
 
 /*****************************************************************************/
 /* PIN DESCRIPTION                                                           */
 /*****************************************************************************/
 
-// Min Value for motors speed
-#define MOTOR_SPEED_MIN   0  
-// Max Value for motors speed
-#define MOTOR_SPEED_MAX 255  
-
-// CONFIGURABLE VALUE: Motor Speed
-#define MOTOR_SPEED      100  
-// CONFIGURABLE VALUE: Potentiometer Tolerance
-#define POTENTIOMETER_TOLERANCE  150  
+// OUTPUT pin for LED RGB
+#define PIN_OUTPUT_LED_RGB                          13
 
 // INPUT pin for tactile switch
 //#define PIN_INPUT_SWITH                            1
-// OUTPUT pin for LED RGB
-#define PIN_OUTPUT_LED_RGB                          13
 // OUTPUT pin for bluetoothpe
 //#define PIN_OUTPUT_BLUETOOTH                      15                            
 
 // Accesory Board Detection
-#define ACC_BRD 
+//#define ACC_BRD
 // Multiplexer Control Crazy Pionut Assignement A
 #define MUX_A                                       16 
 // Multiplexer Control Crazy Pionut Assignement B
@@ -112,11 +113,6 @@ const int FINGER_POSITION_MATRIX[STATES_NUMBER][FINGERS] = {
 #define MUX_MAIN                                     0
 // Acc Board Multiplexer Output 
 #define MUX_ACC                                      1 
-
-// INPUT pin for MyoWare Sensor 1
-//#define PIN_INPUT_MYOWARE_SENSOR_1                   0
-// INPUT pin for MyoWare Sensor 2
-//#define PIN_INPUT_MYOWARE_SENSOR_2                   1
 
 // INPUT pin for mitten related potentiometer
 #define PIN_OUTPUT_POTENTIOMETER_MITTEN              2
@@ -143,7 +139,7 @@ const int FINGER_POSITION_MATRIX[STATES_NUMBER][FINGERS] = {
 #define PIN_OUTPUT_MOTOR_THUMB                       4
 
 //Motor Control Matrix
-const int MOTOR_CONTROL_MATRIX[FINGERS][2] = 
+const int MOTOR_CONTROL_MATRIX[FINGERS][2] =
    {{PIN_OUTPUT_MOTOR_MITTEN_PWM, PIN_OUTPUT_MOTOR_MITTEN},
     {PIN_OUTPUT_MOTOR_FOREFINGER_PWM, PIN_OUTPUT_MOTOR_FOREFINGER},
     {PIN_OUTPUT_MOTOR_THUMB_PWM, PIN_OUTPUT_MOTOR_THUMB}};   
@@ -166,11 +162,6 @@ const int MOTOR_CONTROL_MATRIX[FINGERS][2] =
 #define CONTROL_INPUT_POTENTIOMETER_THUMB       6
 // CS_2
 #define CONTROL_INPUT_CURRENT_SENSOR_THUMB      7
-
-// const int muxOut[2] = {MUX_MAIN, MUX_ACC};
-// Mux Main and Mux Acc Value Store
-// const int muxVal[2][8]; 
-
 
 
 #endif

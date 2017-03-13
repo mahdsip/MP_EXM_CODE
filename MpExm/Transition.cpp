@@ -1,30 +1,31 @@
 #include "Transition.h"
 
+
 /******************************************************************************/
 /* PUBLIC METHODS                                                             */
 /******************************************************************************/
 
 Transition::Transition(){
-	logger.debug("Transition - Transition\n");
+	//logger.debug("Transition - Transition\n");
 }
 
 void Transition::reset(){
 
-	logger.debug("Transition - reset\n");
+	//logger.debug("Transition - reset\n");
 
 	transitionToInactive();
 }
 
 int Transition::getTransitionToPerform(State state){
 
-	logger.debug("Transition - getTransitionToPerform\n");
+	//logger.debug("Transition - getTransitionToPerform\n");
 
 	return inputOutputUtils.getTransitionToPerform(state);
 }
 
 void Transition::transitionToInactive(){
 
-	logger.debug("Transition - transitionToInactive\n");
+	//logger.debug("Transition - transitionToInactive\n");
 
 	openMitten();
 	openForefinger();
@@ -33,7 +34,7 @@ void Transition::transitionToInactive(){
 
 void Transition::transitionToIdle(){
 
-	logger.debug("Transition - transitionToIdle\n");
+	//logger.debug("Transition - transitionToIdle\n");
 
 	openMitten();
 	openForefinger();
@@ -42,7 +43,7 @@ void Transition::transitionToIdle(){
 
 void Transition::transitionToTongs(){
 
-	logger.debug("Transition - transitionToTongs\n");
+	//logger.debug("Transition - transitionToTongs\n");
 
 	openMitten();
 	closeForefinger();
@@ -51,7 +52,7 @@ void Transition::transitionToTongs(){
 
 void Transition::transitionToFinger(){
 
-	logger.debug("Transition - transitionToFinger\n");
+	//logger.debug("Transition - transitionToFinger\n");
 
 	closeMitten();
 	openForefinger();
@@ -60,7 +61,7 @@ void Transition::transitionToFinger(){
 
 void Transition::transitionToClose(){
 
-	logger.debug("Transition - transitionToClose\n");
+	//logger.debug("Transition - transitionToClose\n");
 
 	closeMitten();
 	closeForefinger();
@@ -69,7 +70,7 @@ void Transition::transitionToClose(){
 
 void Transition::transitionToFist(){
 
-	logger.debug("Transition - transitionToFist\n");
+	//logger.debug("Transition - transitionToFist\n");
 
 	closeMitten();
 	closeForefinger();
@@ -82,36 +83,36 @@ void Transition::transitionToFist(){
 
   void Transition::openMitten(){
 
-    logger.debug("Transition - openMitten\n");
+    //logger.debug("Transition - openMitten\n");
     inputOutputUtils.openMitten();
   }
 
   void Transition::closeMitten(){
 
-    logger.debug("Transition - closeMitten\n");
+    //logger.debug("Transition - closeMitten\n");
     inputOutputUtils.closeMitten();
   }
 
   void Transition::openForefinger(){
 
-    logger.debug("Transition - openForefinger\n");
+    //logger.debug("Transition - openForefinger\n");
     inputOutputUtils.openForefinger();
   }
 
   void Transition::closeForefinger(){
 
-    logger.debug("Transition - closeForefinger\n");
+    //logger.debug("Transition - closeForefinger\n");
     inputOutputUtils.closeForefinger();
   }
 
   void Transition::openThumb(){
 
-    logger.debug("Transition - openThumb\n");
+    //logger.debug("Transition - openThumb\n");
     inputOutputUtils.openThumb();
   }
 
   void Transition::closeThumb(){
 
-    logger.debug("Transition - closeThumb\n");
+    //logger.debug("Transition - closeThumb\n");
     inputOutputUtils.closeThumb();
   }

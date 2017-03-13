@@ -2,19 +2,19 @@
 #define INPUT_OUTPUT_UTILS_H
 
 #include "Constants.h"
-#include "Test.h"
 #include "MyoControl.h"
+#include "State.h"
 
 class InputOutputUtils{
 
   private:
 
 	// TODELETE - Test Class
-	Test test;
+	//Test test;
 
 	// INPUT - Myoware Sensor Controllers
 	MyoControl myowareSensorController1;
-  MyoControl myowareSensorController2;
+	MyoControl myowareSensorController2;
 
 	// State to retrieve current finger's position
     State currentState;
@@ -23,9 +23,10 @@ class InputOutputUtils{
     void motorControl(int motorID, int motorDir, int motorSpeed);
 
     // Multiplexor lecture method
-    int readMultiplexorInput(int controlId);
+    int multiplexorRead(int controlId);
 	
-	// Finger control method
+	// Finger control methods
+    void initialFingerControl(int motorId, int controlId);
 	void fingerControl(int motorId, int motorDir, int controlId);
 
   public:

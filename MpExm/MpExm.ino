@@ -4,20 +4,26 @@
 
 #define LOGLEVEL LOG_LEVEL_INFOS
 
+// TODOs
+// Buscar manera mas eficiente de loggear
+// Controlar el del de la PCB para que me ponga un color según el estado
+
 StateMachine stateMachine;
 int counter = 0;
 
 void setup(){
   
 	logger.init(LOGLEVEL, 115200);
+  delay(5000);
+  
 	logger.info("\n-------------> Setup\n");
 
-	//inputOutputUtils.initializeInputElements();
+  stateMachine.start();
+
+	inputOutputUtils.initializeInputElements();
 
 	inputOutputUtils.initializeOutputElements();
   
-	stateMachine.start();
-
 }
   
 void loop(){

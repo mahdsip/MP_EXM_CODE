@@ -1,4 +1,3 @@
-#include "Arduino.h"
 #include "MyoControl.h"
 
 static const unsigned int sampleTime = 1;
@@ -10,9 +9,11 @@ MyoControl::MyoControl() {
 }
 
 MyoControl::MyoControl(int aControlId) {
-    //pinMode(emg_pin, INPUT);
-    //emg_pin = _emg_pin;
+  //pinMode(emg_pin, INPUT);
+  //emg_pin = _emg_pin;
 	controlId = aControlId;
+  pinMode(MUX_MAIN, INPUT);
+
 }
 
 /* blinkLED blinks a led "repeat" times with a "bTime" interval between on and off */
@@ -108,6 +109,7 @@ void MyoControl::calibration() {
 }
 
 bool MyoControl::activation() {
+  
     delayMicroseconds(50);
     sampling(1);
     if(sampleOk) {
@@ -130,6 +132,8 @@ bool MyoControl::activation() {
 
 int MyoControl::multiplexorRead(){
 
+    logger.info("MyoControl - multiplexorRead - input[%i]\n", controlId);
+
 	int cA = controlId & 0x01;   
 	int cB = (controlId>>1) & 0x01;     
 	int cC = (controlId>>2) & 0x01;   
@@ -139,6 +143,8 @@ int MyoControl::multiplexorRead(){
 	digitalWrite(MUX_C, cC);
   
 	int readedValue = analogRead(MUX_MAIN);
+
+    logger.info("MyoControl - multiplexorRead - output[%i]\n", readedValue);
 	
 	return readedValue;
 
