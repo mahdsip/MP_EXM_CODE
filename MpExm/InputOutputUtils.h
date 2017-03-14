@@ -4,13 +4,14 @@
 #include "Constants.h"
 #include "MyoControl.h"
 #include "State.h"
+#include "Test.h"
 
 class InputOutputUtils{
 
   private:
 
 	// TODELETE - Test Class
-	//Test test;
+	Test test;
 
 	// INPUT - Myoware Sensor Controllers
 	MyoControl myowareSensorController1;

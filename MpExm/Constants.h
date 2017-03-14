@@ -95,6 +95,7 @@ const int FINGER_POSITION_MATRIX[STATES_NUMBER][FINGERS] = {
 
 // OUTPUT pin for LED RGB
 #define PIN_OUTPUT_LED_RGB                          13
+#define PIN_OUTPUT_LEDSTRIPE_RGB                    10
 
 // INPUT pin for tactile switch
 //#define PIN_INPUT_SWITH                            1

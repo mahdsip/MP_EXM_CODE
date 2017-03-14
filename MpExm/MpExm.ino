@@ -5,8 +5,13 @@
 #define LOGLEVEL LOG_LEVEL_INFOS
 
 // TODOs
-// Buscar manera mas eficiente de loggear
-// Controlar el del de la PCB para que me ponga un color según el estado
+// Buscar manera mas eficiente de loggear (Miguel)
+// Corregir los problemas de caracteres
+// Poner unos colores m�s bonitos y menos intensos en el led
+// Testear el potenciometro para comprobar hacia d�nde va e integrar el motor nuevo
+// Testear con el sensor nuevo
+// Asociar el led stripe a la lectura del sensor
+
 
 StateMachine stateMachine;
 int counter = 0;
@@ -14,7 +19,7 @@ int counter = 0;
 void setup(){
   
 	logger.init(LOGLEVEL, 115200);
-  delay(5000);
+    delay(5000);
   
 	logger.info("\n-------------> Setup\n");
 

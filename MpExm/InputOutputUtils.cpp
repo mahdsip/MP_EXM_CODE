@@ -16,7 +16,7 @@ void InputOutputUtils::initializeInputElements() {
 	logger.info("InputOutputUtils - initializeInputElements - Calibrate myoware Sensor 2\n");
 	myowareSensorController2.calibration();
 	
-	//test.testInitializeLedStripe();
+	test.testInitializeLedStripe();
 
 }
 
@@ -85,7 +85,7 @@ void InputOutputUtils::resetOutputElements() {
 int InputOutputUtils::getMittenPosition() {
 
 	//TODO: What happens if finger position is diferent to current position?
-	// Tenedremos que revisar en quÃ© posicion se encuentar el dedo realmente para 
+	// Tenedremos que revisar en qué posicion se encuentar el dedo realmente para
 	// restaurar la posicion si es necesario.
 	int mittenPosition = currentState.getMittenPosition();
 
@@ -136,8 +136,7 @@ int InputOutputUtils::getTransitionToPerform(State state) {
 	logger.info("InputOutputUtils - myowareSensorController2 - activation: %d\n", activation2);
 
 	int transitionTo = 0;
-	if(//activation1 ||
-	   activation2){
+	if(activation1 || activation2){
 		transitionTo = STATE_FIST;
 	}else{
 		transitionTo = STATE_IDLE;
@@ -178,12 +177,12 @@ void InputOutputUtils::openMitten() {
 
 	logger.debug("InputOutputUtils - openMitten\n");
 
-  // TODO - Mucho cuidado!!! Estoy hay que recuperarlo
-	//if(getMittenPosition() == CLOSE){
+    // TODO - Mucho cuidado!!! Estoy hay que recuperarlo
+    //if(getMittenPosition() == CLOSE){
 		logger.info("InputOutputUtils - openMitten - OPEN\n");
-		//test.testOutputWithLedStripe(0,0,255,0);
-		//test.testOutputWithLedStripe(1,0,255,0);
-		//test.testOutputWithLedStripe(2,0,255,0);
+		test.testOutputWithLedStripe(0,0,255,0);
+		test.testOutputWithLedStripe(1,0,255,0);
+		test.testOutputWithLedStripe(2,0,255,0);
 		fingerControl(MITTEN, OPEN, CONTROL_INPUT_POTENTIOMETER_MITTEN);
 	//}
 
@@ -193,12 +192,12 @@ void InputOutputUtils::closeMitten() {
 
 	logger.debug("InputOutputUtils - closeMitten\n");
 
-  // TODO - Mucho cuidado!!! Estoy hay que recuperarlo
+	// TODO - Mucho cuidado!!! Estoy hay que recuperarlo
 	//if(getMittenPosition() == OPEN){
 		logger.info("InputOutputUtils - closeMitten - CLOSE\n");
-		//test.testOutputWithLedStripe(0,255,0,0);
-		//test.testOutputWithLedStripe(1,255,0,0);
-		//test.testOutputWithLedStripe(2,255,0,0);
+		test.testOutputWithLedStripe(0,255,0,0);
+		test.testOutputWithLedStripe(1,255,0,0);
+		test.testOutputWithLedStripe(2,255,0,0);
 		fingerControl(MITTEN, CLOSE, CONTROL_INPUT_POTENTIOMETER_MITTEN);
 	//}
 }
@@ -209,7 +208,7 @@ void InputOutputUtils::openForefinger() {
 
 	if(getForefingerPosition() == CLOSE){
 		logger.debug("InputOutputUtils - openForefinger - OPEN\n");
-		//test.testOutputWithLedStripe(3,0,255,0);
+		test.testOutputWithLedStripe(3,0,255,0);
 		//fingerControl(FOREFINGER, OPEN, CONTROL_INPUT_POTENTIOMETER_FOREFINGER);	
 	}
 }
@@ -220,7 +219,7 @@ void InputOutputUtils::closeForefinger() {
 
 	if(getForefingerPosition() == OPEN){
 		logger.debug("InputOutputUtils - closeForefinger - CLOSE\n");
-		//test.testOutputWithLedStripe(3,255,0,0);
+		test.testOutputWithLedStripe(3,255,0,0);
 		//fingerControl(FOREFINGER, CLOSE,CONTROL_INPUT_POTENTIOMETER_FOREFINGER);
 	}
 }
@@ -231,7 +230,7 @@ void InputOutputUtils::openThumb() {
 
 	if(getThumbPosition() == CLOSE){
 		logger.debug("InputOutputUtils - openThumb - OPEN\n");
-		//test.testOutputWithLedStripe(4,0,255,0);
+		test.testOutputWithLedStripe(4,0,255,0);
 		//fingerControl(THUMB, OPEN, CONTROL_INPUT_POTENTIOMETER_THUMB);
 	}
 
@@ -243,7 +242,7 @@ void InputOutputUtils::closeThumb() {
 
 	if(getThumbPosition() == CLOSE){
 		logger.debug("InputOutputUtils - closeThumb - CLOSE\n");
-		//test.testOutputWithLedStripe(4,255,0,0);
+		test.testOutputWithLedStripe(4,255,0,0);
 		//fingerControl(THUMB,CLOSE,CONTROL_INPUT_POTENTIOMETER_THUMB);
 	}
 
@@ -257,32 +256,31 @@ void InputOutputUtils::closeThumb() {
 
 void InputOutputUtils::initialFingerControl(int motorId,  int controlId){
 
-  logger.info("InputOutputUtils - fingerControl\n");
+	logger.info("InputOutputUtils - fingerControl\n");
 
-  int initialPosition = multiplexorRead(controlId);
-  int finalPosition = initialPosition;
-  logger.info("InputOutputUtils - fingerControl - Initial position: %d\n", initialPosition);
+	int initialPosition = multiplexorRead(controlId);
+	int finalPosition = initialPosition;
+	logger.info("InputOutputUtils - fingerControl - Initial position: %d\n", initialPosition);
 
-  if(finalPosition < 200){
-  while(finalPosition < 200){
-	  motorControl(motorId, CLOSE, 100);
-	  delay(100);
-	  finalPosition = multiplexorRead(controlId);
-  }
-  motorControl(motorId, CLOSE, MOTOR_SPEED_MIN);
-  }
+	if(finalPosition < 200){
+		while(finalPosition < 200){
+			motorControl(motorId, OPEN, 100);
+			delay(100);
+			finalPosition = multiplexorRead(controlId);
+		}
+		motorControl(motorId, OPEN, MOTOR_SPEED_MIN);
+	}
 
-  if(finalPosition > 800){
-  while(finalPosition > 800){
-  	  motorControl(motorId, OPEN, 100);
-  	  delay(100);
-  	  finalPosition = multiplexorRead(controlId);
-  }
-  motorControl(motorId, OPEN, MOTOR_SPEED_MIN);
-  }
+	if(finalPosition > 800){
+		while(finalPosition > 800){
+			motorControl(motorId, CLOSE, 100);
+			delay(100);
+			finalPosition = multiplexorRead(controlId);
+		}
+		motorControl(motorId, CLOSE, MOTOR_SPEED_MIN);
+	}
 
-
-  logger.info("InputOutputUtils - fingerControl - finalPosition: %d\n", finalPosition);
+	logger.info("InputOutputUtils - fingerControl - finalPosition: %d\n", finalPosition);
 
 }
 
@@ -295,19 +293,24 @@ void InputOutputUtils::fingerControl(int motorId, int motorDir, int controlId){
   int finalPosition = initialPosition;
   logger.info("InputOutputUtils - fingerControl - Initial position: %d\n", initialPosition);
 
-  if(initialPosition > 200){
+  if(finalPosition > 200){
+
+	  motorControl(motorId, OPEN , MOTOR_SPEED);
+	  delay(500);
+	  motorControl(motorId, OPEN, MOTOR_SPEED_MIN);
+	  finalPosition = multiplexorRead(controlId);
+
+  }else if (finalPosition < 800){
 
 	  motorControl(motorId, CLOSE , MOTOR_SPEED);
 	  delay(500);
 	  motorControl(motorId, CLOSE, MOTOR_SPEED_MIN);
 	  finalPosition = multiplexorRead(controlId);
 
-  }else if (initialPosition < 1000){
-
-	  motorControl(motorId, OPEN , MOTOR_SPEED);
-	  delay(500);
-	  motorControl(motorId, OPEN, MOTOR_SPEED_MIN);
-	  finalPosition = multiplexorRead(controlId);
+  }else{
+	  logger.info("InputOutputUtils - fingerControl - Finger regulation");
+	  delay(1000);
+	  initialFingerControl(motorId, controlId);
   }
   
   logger.info("InputOutputUtils - fingerControl - Final position: %d\n", finalPosition);
@@ -336,11 +339,13 @@ void InputOutputUtils::motorControl(int motorID, int motorDir, int motorSpeed) {
    logger.info("InputOutputUtils - motorControl\n");
 
 	// Forward Direction --> CLOSE --> 1
+    // 1024 --> 0 (decrements)
 	if (motorDir) { 
     logger.info("InputOutputUtils - motorControl - forward direction - CLOSE\n");
 		digitalWrite(MOTOR_CONTROL_MATRIX[motorID][1], LOW);
 		analogWrite(MOTOR_CONTROL_MATRIX[motorID][0], motorSpeed);
 	// Backward Direction --> OPEN --> 0
+	// 0 --> 1024 (increments)
 	} else {
     logger.info("InputOutputUtils - motorControl - backward direction - OPEN\n");
 		digitalWrite(MOTOR_CONTROL_MATRIX[motorID][1], HIGH);

@@ -11,8 +11,8 @@ MyoControl::MyoControl() {
 MyoControl::MyoControl(int aControlId) {
   //pinMode(emg_pin, INPUT);
   //emg_pin = _emg_pin;
-	controlId = aControlId;
-  pinMode(MUX_MAIN, INPUT);
+  controlId = aControlId;
+  //pinMode(MUX_MAIN, INPUT);
 
 }
 
