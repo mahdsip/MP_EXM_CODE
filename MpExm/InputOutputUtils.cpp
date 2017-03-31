@@ -261,10 +261,9 @@ void InputOutputUtils::initialFingerControl(int motorId,  int controlId){
 			finalPosition = multiplexorRead(controlId);
 		}
 		motorControl(motorId, OPEN, MOTOR_SPEED_MIN);
-	}
-
-	if(finalPosition > 800){
-		while(finalPosition > 800){
+   
+	}else if(finalPosition > 500){
+		while(finalPosition > 200){
 			motorControl(motorId, CLOSE, 100);
 			delay(100);
 			finalPosition = multiplexorRead(controlId);
@@ -285,24 +284,24 @@ void InputOutputUtils::fingerControl(int motorId, int motorDir, int controlId){
 	int finalPosition = initialPosition;
 	logger.info("InputOutputUtils - fingerControl - Initial position: %d\n", initialPosition);
 
-	if(finalPosition > 200){
+	if((finalPosition > 200) && (motorDir == OPEN)){
 
 		motorControl(motorId, OPEN , MOTOR_SPEED);
-		delay(500);
+		delay(1500);
 		motorControl(motorId, OPEN, MOTOR_SPEED_MIN);
 		finalPosition = multiplexorRead(controlId);
 
-	}else if (finalPosition < 800){
+	}else if ((finalPosition < 800) && (motorDir == CLOSE)){
 
 		motorControl(motorId, CLOSE , MOTOR_SPEED);
-		delay(500);
+		delay(1500);
 		motorControl(motorId, CLOSE, MOTOR_SPEED_MIN);
 		finalPosition = multiplexorRead(controlId);
 
 	}else{
 		logger.info("InputOutputUtils - fingerControl - Finger regulation");
-		delay(1000);
 		initialFingerControl(motorId, controlId);
+    fingerControl(motorId, motorDir, controlId);
 	}
   
 	logger.info("InputOutputUtils - fingerControl - Final position: %d\n", finalPosition);

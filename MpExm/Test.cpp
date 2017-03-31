@@ -32,7 +32,7 @@ void Test::testInitializeLedStripe(){
 	ledStripe = Adafruit_NeoPixel(10, PIN_OUTPUT_LEDSTRIPE_RGB, NEO_GRB + NEO_KHZ800);
 	ledStripe.begin();
 
-  ledStripe.setBrightness(50);
+	ledStripe.setBrightness(50);
 	ledStripe.setPixelColor(0, ledStripe.Color(0, 0, 0));
 	ledStripe.show();
     	
