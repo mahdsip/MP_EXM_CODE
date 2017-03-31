@@ -6,11 +6,10 @@
 
 // TODOs
 // Buscar manera mas eficiente de loggear (Miguel)
-// Corregir los problemas de caracteres
-// Poner unos colores m�s bonitos y menos intensos en el led
+// Corregir los problemas de los acentos
 // Testear el potenciometro para comprobar hacia d�nde va e integrar el motor nuevo
-// Testear con el sensor nuevo
-// Asociar el led stripe a la lectura del sensor
+// Lector PID para el potenci�metro?
+// M�s cometarios
 
 
 StateMachine stateMachine;
@@ -19,7 +18,7 @@ int counter = 0;
 void setup(){
   
 	logger.init(LOGLEVEL, 115200);
-    delay(5000);
+  delay(5000);
   
 	logger.info("\n-------------> Setup\n");
 
@@ -36,7 +35,7 @@ void loop(){
 	logger.info("\n-------------> Loop (%d)\n", counter);
 	counter++;
 	stateMachine.executeTransition();
-	delay(5000);
+	//delay(5000);
 
 }
 

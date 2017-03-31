@@ -3,6 +3,7 @@
 
 #include "State.h"
 #include "Transition.h"
+#include "Test.h"
 
 class StateMachine{
 
@@ -20,6 +21,9 @@ class StateMachine{
     State state;
 	// State machine's transition
     Transition transition;
+
+    // Test class
+    Test test;
 
 };
 

@@ -1,6 +1,7 @@
 #include "StateMachine.h"
 #include "Constants.h"
 
+
 /******************************************************************************/
 /* PUBLIC METHODS                                                             */
 /******************************************************************************/
@@ -13,8 +14,11 @@ void StateMachine::start(){
   // TODO: Puesto a IDLE para que partamos en las pruebas 
   // de un estado desde el que podamos hacer movimientos.
   // Deberiamos arrancar en INNACTIVE
-  state.setCurrentState(STATE_IDLE);
+  state.setCurrentState(TRANSITION_TO_INACTIVE);
   transition = Transition();
+
+  test.testInitializeLedStripe();
+  
 }
 
 void StateMachine::executeTransition(){
@@ -26,7 +30,7 @@ void StateMachine::executeTransition(){
     int transitionToPeform = transition.getTransitionToPerform(state);
 
     logger.debug("StateMachine - executeTransition - transition to perform: %i\n", 
-	             transitionToPeform);
+	              transitionToPeform);
 
     switch(transitionToPeform){
 
@@ -35,17 +39,20 @@ void StateMachine::executeTransition(){
 
       case TRANSITION_TO_INACTIVE:
         transition.transitionToInactive();
+        test.testOutputWithLedStripe(0,0,0,0);
         state.setCurrentState(STATE_INACTIVE);
       break;
 
       case TRANSITION_TO_IDLE:
         transition.transitionToIdle();
+        test.testOutputWithLedStripe(0,102,204,0);
         state.setCurrentState(STATE_IDLE);
       break;
 
       case TRANSITION_TO_TONGS:
         if(state.getCurrentState() != STATE_INACTIVE){
           transition.transitionToTongs();
+          test.testOutputWithLedStripe(0,0,128,255);
           state.setCurrentState(STATE_TONGS);
         }
       break;
@@ -53,6 +60,7 @@ void StateMachine::executeTransition(){
       case TRANSITION_TO_FINGER:
         if(state.getCurrentState() != STATE_INACTIVE){
           transition.transitionToFinger();
+          test.testOutputWithLedStripe(0,255,255,0);
           state.setCurrentState(STATE_FINGER);
         }
       break;
@@ -60,6 +68,7 @@ void StateMachine::executeTransition(){
       case TRANSITION_TO_CLOSE:
         if(state.getCurrentState() != STATE_INACTIVE){
           transition.transitionToClose();
+          test.testOutputWithLedStripe(0,153,0,153);
           state.setCurrentState(STATE_CLOSE);
         }
       break;
@@ -67,6 +76,7 @@ void StateMachine::executeTransition(){
       case TRANSITION_TO_FIST:
         if(state.getCurrentState() != STATE_INACTIVE){
           transition.transitionToFist();
+          test.testOutputWithLedStripe(0,204,0,0);
           state.setCurrentState(STATE_FIST);
         }
       break;
