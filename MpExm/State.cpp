@@ -1,3 +1,4 @@
+
 #include "State.h"
 
 /******************************************************************************/
@@ -6,28 +7,29 @@
 
 State::State(){
 
-	logger.debug("State - State\n");
+	logger.debug("STATE::State\n");
 
 	currentState = STATE_INACTIVE;
 }
 
 int State::getCurrentState(){
 
-	logger.debug("State - getCurrentState - Current state: %i\n", currentState);
+	logger.debug("STATE::getCurrState\n");
+	logger.debug("--State: %c\n", currentState);
 
 	return currentState;
 }
 
 void State::setCurrentState(int state){
 
-	logger.info("State - setCurrentState - Modify current state:  %i\n", state);
+	logger.info("STATE::setCurrState-State:  %i\n", state);
 
 	currentState = state;
 }
 
 void State::reset(){
 
-	logger.debug("State - reset\n");
+	logger.debug("**STATE::reset**\n");
 
 	currentState = STATE_INACTIVE;
 }
@@ -36,7 +38,7 @@ void State::reset(){
 int State::getMittenPosition(){
 		
 	int fingerPosition   = FINGER_POSITION_MATRIX[currentState][MITTEN];
-	logger.info("State - getMittenPosition - State [%i] - Position [%i]\n", currentState, fingerPosition);
+	logger.info("STATE::getMittenPos-State [%i] - Pos[%i]\n", currentState, fingerPosition);
 
 	return fingerPosition;
 
@@ -45,7 +47,7 @@ int State::getMittenPosition(){
 int State::getForefingerPosition(){
   
 	int fingerPosition   = FINGER_POSITION_MATRIX[currentState][FOREFINGER];
-	logger.debug("State - getForefingerPosition - State [%i] - Position [%i]\n", currentState, fingerPosition);
+	logger.debug("STATE::getForefingerPos - State [%i] - Pos [%i]\n", currentState, fingerPosition);
 
 	return fingerPosition;
 
@@ -53,10 +55,10 @@ int State::getForefingerPosition(){
 
 int State::getThumbPosition(){
 
-	logger.debug("State - getThumbPosition\n");
+	logger.debug("STATE::getThumbPos\n");
   
 	int fingerPosition   = FINGER_POSITION_MATRIX[currentState][THUMB];
-	logger.debug("State - getThumbPosition - State [%i] - Position [%i]\n", currentState, fingerPosition);
+	logger.debug("STATE::getThumbPos - State [%i] - Pos [%i]\n", currentState, fingerPosition);
 
 	return fingerPosition;
 
