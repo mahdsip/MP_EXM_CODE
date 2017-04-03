@@ -8,7 +8,7 @@
 
 void StateMachine::start(){
 
-  logger.debug("StateMachine - start\n");
+  logger.debug("STM::start\n");
 
   state = State();
   // TODO: Puesto a IDLE para que partamos en las pruebas 
@@ -23,13 +23,13 @@ void StateMachine::start(){
 
 void StateMachine::executeTransition(){
 
-    logger.debug("StateMachine - executeTransition\n");
+    logger.debug("STM::executeTransition\n");
     
     int currentState = state.getCurrentState();
 
     int transitionToPeform = transition.getTransitionToPerform(state);
 
-    logger.debug("StateMachine - executeTransition - transition to perform: %i\n", 
+    logger.debug("STM::executeTransition-Transition: %i\n", 
 	              transitionToPeform);
 
     switch(transitionToPeform){
@@ -89,9 +89,10 @@ void StateMachine::executeTransition(){
 
 void StateMachine::reset(){
 
-  logger.debug("StateMachine - reset\n");
+  logger.debug("STM::reset\n");
 
   state.reset();
   transition.reset();
 
 }
+
